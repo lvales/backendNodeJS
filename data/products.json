@@ -1,0 +1,47 @@
+[
+	{
+		"title": "Zapatillas Nike",
+		"description": "Color azul y blanco",
+		"price": 29000,
+		"thumbnail": "imagen.jpg",
+		"code": "ZN128",
+		"stock": 150,
+		"id": 1
+	},
+	{
+		"title": "Zapatillas Nike",
+		"description": "Color azul y blanco",
+		"price": 29000,
+		"thumbnail": "imagen.jpg",
+		"code": "ZN125",
+		"stock": 150,
+		"id": 2
+	},
+	{
+		"title": "Zapatillas Adidas",
+		"description": "Color Rojo y blanco",
+		"price": 55000,
+		"thumbnail": "imagen_adidas.jpg",
+		"code": "AN133",
+		"stock": 150,
+		"id": 3
+	},
+	{
+		"title": "Zapatillas Nike",
+		"description": "Color azul y blanco",
+		"price": 29000,
+		"thumbnail": "imagen.jpg",
+		"code": "ZN133",
+		"stock": 150,
+		"id": 4
+	},
+	{
+		"title": "Zapatillas Puma",
+		"description": "Color azul y blanco",
+		"price": 29000,
+		"thumbnail": "imagen.jpg",
+		"code": "ZN134",
+		"stock": 150,
+		"id": 5
+	}
+]

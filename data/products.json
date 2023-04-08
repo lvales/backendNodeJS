@@ -1,47 +1,28 @@
 [
 	{
-		"title": "Zapatillas Nike",
-		"description": "Color azul y blanco",
-		"price": 29000,
-		"thumbnail": "imagen.jpg",
-		"code": "ZN128",
-		"stock": 150,
+		"title": "Zapatillas Rebook",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZRB1251",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/06fc680c-f386-47c7-88e8-5875db54c196.jpeg"
+		],
 		"id": 1
 	},
 	{
-		"title": "Zapatillas Nike",
-		"description": "Color azul y blanco",
-		"price": 29000,
-		"thumbnail": "imagen.jpg",
-		"code": "ZN125",
-		"stock": 150,
-		"id": 2
-	},
-	{
 		"title": "Zapatillas Adidas",
-		"description": "Color Rojo y blanco",
-		"price": 55000,
-		"thumbnail": "imagen_adidas.jpg",
-		"code": "AN133",
-		"stock": 150,
-		"id": 3
-	},
-	{
-		"title": "Zapatillas Nike",
-		"description": "Color azul y blanco",
-		"price": 29000,
-		"thumbnail": "imagen.jpg",
-		"code": "ZN133",
-		"stock": 150,
-		"id": 4
-	},
-	{
-		"title": "Zapatillas Puma",
-		"description": "Color azul y blanco",
-		"price": 29000,
-		"thumbnail": "imagen.jpg",
-		"code": "ZN134",
-		"stock": 150,
-		"id": 5
+		"description": "Zapatillas color azul y rojo",
+		"code": "ZAD12345",
+		"price": "45000",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/7cd05fba-2c53-4ab1-aa9e-2d2abc116660.jpeg"
+		],
+		"id": 2
 	}
 ]

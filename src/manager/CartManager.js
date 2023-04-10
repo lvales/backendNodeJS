@@ -64,7 +64,6 @@ export default class CartManager {
     const cartProducts = await this.getCartProducts();
 
     const cartProduct = cartProducts.find(e => e.id === id);
-    console.log(cartProduct);
     
     if (!cartProduct) {
       return {

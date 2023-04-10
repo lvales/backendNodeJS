@@ -17,7 +17,6 @@ export default class ProductManager {
       const products = await fs.promises.readFile(this.path, 'utf-8');
       const productsJson = JSON.parse(products);
       return productsJson;
-
     } catch (error) {
       console.log(error);
     }
@@ -26,11 +25,12 @@ export default class ProductManager {
   getProductById = async (idProduct) => {
 
     const products = await this.getProducts();
-
-    let product = products.find(product => product.id === parseInt(idProduct));
+    const product = products.find(product => product.id === parseInt(idProduct));
 
     if (!product) {
-      return 'Error: el producto no existe';
+      return {
+        exists: false
+      }
     }
     return product;
   };
@@ -43,10 +43,11 @@ export default class ProductManager {
       }
     }
 
-    let products = await this.getProducts();
+    const products = await this.getProducts();
 
     if (products.length === 0) {
       product.id = 1;
+      product.status = true;
     } else {
       product.id = products[products.length - 1].id + 1;
     };
@@ -83,8 +84,6 @@ export default class ProductManager {
     }
 
     updateProduct.id = id;
-
-    console.log(updateProduct);
 
     products[index] = { ...products[index], ...updateProduct };
 

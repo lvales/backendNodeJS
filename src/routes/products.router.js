@@ -1,9 +1,9 @@
 import { Router } from "express";
-import productManager from "../manager/ProductManager.js";
+import ProductManager from "../manager/ProductManager.js";
 import { uploader } from "../utils.js";
 
 const router = Router();
-const manager = new productManager("./data/products.json");
+const manager = new ProductManager("./data/products.json");
 
 
 router.get("/", async (req, res) => {
@@ -24,15 +24,22 @@ router.get("/", async (req, res) => {
 
 
 router.get("/:id", async (req, res) => {
-  const idProduct = req.params.id;
 
-  if (idProduct) {
-    const product = await manager.getProductById(idProduct);
-    return res.send({
-      status: 'success',
-      products: product,
+  const idProduct = req.params.id;
+  const product = await manager.getProductById(idProduct);
+
+  if(product.exists === false){
+    return res.status(404).send({
+      status: 'ERROR',
+      msg: `El producto con id ${idProduct} no existe.`
     });
   }
+
+  return res.send({
+    status: 'success',
+    products: product,
+  });
+
 });
 
 
@@ -45,14 +52,14 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
 
   const product = await manager.addProduct(reqProduct);
 
-  if(product.incomplete === true){
+  if (product.incomplete === true) {
     return res.status(409).send({
       status: 'ERROR',
       msg: 'Producto incompleto, faltan parametros'
     });
   }
 
-  if(product.duplicate === true){
+  if (product.duplicate === true) {
     return res.status(409).send({
       status: 'ERROR',
       msg: 'El codico de producto ya exixte'
@@ -72,7 +79,7 @@ router.put("/:id", async (req, res) => {
 
   const updateProduct = await manager.updateProducts(id, reqProduct);
 
-  if(updateProduct.exists === false){
+  if (updateProduct.exists === false) {
     return res.status(404).send({
       status: 'ERROR',
       msg: `El producto con id ${id} no existe`
@@ -91,7 +98,7 @@ router.delete("/:id", async (req, res) => {
 
   const deleteProduct = await manager.deleteProduct(id);
 
-  if(deleteProduct.exists === false){
+  if (deleteProduct.exists === false) {
     return res.status(404).send({
       status: 'ERROR',
       msg: `El producto con id ${id} no existe`

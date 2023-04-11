@@ -75,7 +75,7 @@ export default class CartManager {
 
     if (!product || product.id != pid) {
       cartProduct.products.push({
-        id: idProduct,
+        id: pid,
         quantity: 1
       });
     } else {

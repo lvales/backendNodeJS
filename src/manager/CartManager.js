@@ -7,9 +7,8 @@ export default class CartManager {
   };
 
   getCartProducts = async () => {
-    if (!fs.existsSync(this.path)) {
-      return []
-    }
+    
+    if (!fs.existsSync(this.path)) return []
 
     try {
       const cartProducts = await fs.promises.readFile(this.path, 'utf-8');
@@ -24,11 +23,8 @@ export default class CartManager {
     const cartProducts = await this.getCartProducts();
     const cartProduct = cartProducts.find(e => e.id === parseInt(idCart));
 
-    if (!cartProduct) {
-      return {
-        exists: false
-      }
-    }
+    if (!cartProduct) return { exists: false }
+
     return cartProduct;
   }
 
@@ -65,12 +61,8 @@ export default class CartManager {
 
     const cartProduct = cartProducts.find(e => e.id === id);
     
-    if (!cartProduct) {
-      return {
-        exists: false
-      }
-    }
-
+    if (!cartProduct) return { exists: false }
+    
     const product = cartProduct.products.find(e=>e.id === pid);
 
     if (!product || product.id != pid) {

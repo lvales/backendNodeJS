@@ -28,13 +28,13 @@
 	{
 		"title": "Zapatillas Pony",
 		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1234",
-		"price": "35400",
+		"code": "ZPN1563",
+		"price": "23400",
 		"status": "true",
-		"stock": "1500",
+		"stock": "3500",
 		"category": "Calzado",
 		"thumbnail": [
-			"http://localhost:8080/images/d1f9fc1a-92b8-442d-9b75-7f86786a81be.jpeg"
+			"http://localhost:8080/images/c436d345-5aad-4535-b907-9a8ae890afbb.jpeg"
 		],
 		"id": 3
 	},
@@ -50,5 +50,41 @@
 			"http://localhost:8080/images/04d0e3c8-e405-485b-bf15-3531f5adce9a.jpeg"
 		],
 		"id": 4
+	},
+	{
+		"title": "Zapatillas Flecha",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1231",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 5
+	},
+	{
+		"title": "Zapatillas Flecha2",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1239",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 6
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN12390",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"id": 7
 	}
 ]

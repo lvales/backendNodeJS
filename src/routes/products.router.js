@@ -46,9 +46,11 @@ router.get("/:id", async (req, res) => {
 router.post("/", uploader.single("thumbnail"), async (req, res) => {
 
   const reqProduct = req.body;
-  const filename = req.file.filename;
-
-  reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];
+  
+  if(req.file){
+    const filename = req.file.thumbnail;
+    reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];
+  };
 
   const product = await manager.addProduct(reqProduct);
 
@@ -62,7 +64,7 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
   if (product.duplicate === true) {
     return res.status(409).send({
       status: 'ERROR',
-      msg: 'El codico de producto ya exixte'
+      msg: 'El codigo de producto ya exixte'
     });
   }
   return res.send({

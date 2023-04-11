@@ -18,6 +18,12 @@ router.get('/:id', async (req, res) => {
    const idCart = req.params.id;
    const cart = await manager.getCartProductById(idCart);
 
+   if(cart.exists === false){
+      return res.status(404).send({
+         status: 'ERROR',
+         msg: `El carrito con id ${idCart} no existe`
+      });
+   } 
    res.send({
       cart
    });
@@ -37,7 +43,6 @@ router.post('/', async (req, res) => {
 router.post('/:cid/product/:pid', async (req, res) => {
    const idCart = req.params.cid;
    const idProduct = req.params.pid;
-
    const addedProdut = await manager.addProductCart(idCart, idProduct);
 
    if (addedProdut.exists === false) {

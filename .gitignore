@@ -1,2 +1,2 @@
-/node_modules/
-/images/
+node_modules
+src/public/images

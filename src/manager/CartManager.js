@@ -7,7 +7,7 @@ export default class CartManager {
   };
 
   getCartProducts = async () => {
-    
+
     if (!fs.existsSync(this.path)) return []
 
     try {
@@ -55,17 +55,17 @@ export default class CartManager {
 
 
   addProductCart = async (idCart, idProduct) => {
-    const id = parseInt(idCart);
+    const cid = parseInt(idCart);
     const pid = parseInt(idProduct);
     const cartProducts = await this.getCartProducts();
 
-    const cartProduct = cartProducts.find(e => e.id === id);
-    
+    const cartProduct = cartProducts.find(e => e.id === cid);
+
     if (!cartProduct) return { exists: false }
-    
+
     const product = cartProduct.products.find(e=>e.id === pid);
 
-    if (!product || product.id != pid) {
+    if (!product || product.id !== pid) {
       cartProduct.products.push({
         id: pid,
         quantity: 1

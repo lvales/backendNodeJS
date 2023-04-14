@@ -86,5 +86,18 @@
 		"stock": "1500",
 		"category": "Calzado",
 		"id": 7
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN12398",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 8
 	}
 ]

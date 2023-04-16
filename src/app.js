@@ -29,8 +29,8 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartsRouter);
 app.use('/', viewRouter);
 
-// Socket
-const socketServerIO = new Server(server); 
+// Socket.io
+const socketServerIO = new Server(server);
 socketServerIO.on('connection', socket => {
   console.log('Usuario conectado');
   socket.on('message', data => {

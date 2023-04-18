@@ -14,78 +14,83 @@
 	},
 	{
 		"title": "Zapatillas Adidas",
-		"description": "Zapatillas color azul y rojo",
-		"code": "ZAD12345",
-		"price": "45000",
-		"status": "true",
-		"stock": "1500",
+		"description": "Color verde",
+		"code": "ZAD1564",
+		"price": "26700",
+		"stock": "200",
 		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/7cd05fba-2c53-4ab1-aa9e-2d2abc116660.jpeg"
-		],
+		"thumbnail": "nike.jpg",
 		"id": 2
 	},
 	{
-		"title": "Zapatillas Pony",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1563",
-		"price": "23400",
-		"status": "true",
-		"stock": "3500",
+		"title": "Zapatillas Puma",
+		"description": "Color rojo",
+		"code": "ZPM6548",
+		"price": "23500",
+		"stock": "100",
 		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/c436d345-5aad-4535-b907-9a8ae890afbb.jpeg"
-		],
+		"thumbnail": "nike.jpg",
 		"id": 3
 	},
 	{
-		"title": "Zapatillas Axios",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1233",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
+		"title": "Zapatillas Flecha",
+		"description": "Color verde",
+		"code": "ZFL464",
+		"price": "15200",
+		"stock": "200",
 		"category": "Calzado",
 		"thumbnail": [
-			"http://localhost:8080/images/04d0e3c8-e405-485b-bf15-3531f5adce9a.jpeg"
+			"http://localhost:8080/images/undefined"
 		],
 		"id": 4
 	},
 	{
-		"title": "Zapatillas Flecha",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1231",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
+		"title": "4343",
+		"description": "23423",
+		"code": "2342343",
+		"price": "234233",
+		"stock": "234233",
+		"category": "234233",
 		"thumbnail": [
 			"http://localhost:8080/images/undefined"
 		],
 		"id": 5
 	},
 	{
-		"title": "Zapatillas Flecha2",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1239",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
+		"title": "4343",
+		"description": "23423",
+		"code": "2342343D",
+		"price": "234233",
+		"stock": "234233",
+		"category": "234233",
 		"thumbnail": [
 			"http://localhost:8080/images/undefined"
 		],
 		"id": 6
 	},
 	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN12390",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
+		"title": "4343",
+		"description": "23423",
+		"code": "2342343D4",
+		"price": "234233",
+		"stock": "234233",
+		"category": "234233",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
 		"id": 7
+	},
+	{
+		"title": "4343",
+		"description": "23423",
+		"code": "2342343D4Q",
+		"price": "234233",
+		"stock": "234233",
+		"category": "234233",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 8
 	},
 	{
 		"title": "Zapatillas Flecha256",
@@ -98,6 +103,58 @@
 		"thumbnail": [
 			"http://localhost:8080/images/undefined"
 		],
-		"id": 8
+		"id": 9
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1239",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 10
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1239D",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 11
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1239DW",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 12
+	},
+	{
+		"title": "Zapatillas Flecha256",
+		"description": "Zapatillas color azul y blanco",
+		"code": "ZPN1239DW3",
+		"price": "35400",
+		"status": "true",
+		"stock": "1500",
+		"category": "Calzado",
+		"thumbnail": [
+			"http://localhost:8080/images/undefined"
+		],
+		"id": 13
 	}
 ]

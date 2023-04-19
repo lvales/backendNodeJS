@@ -1,13 +1,14 @@
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-6 px-5">
             <div class="row">
                 <h2 class="mt-3">Productos disponibles</h2>
                 <hr>
-                <div class="vh-50 overflow-auto">
+                <div style="height: 80vh; overflow-y: scroll;">
                     {{#each productos}}
                     <div class="card m-2" style="width: 18rem;">
                         <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-danger">ID: {{ this.id }}</h6>
                             <h5 class="card-title">{{ this.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Codigo: {{ this.code }}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Precio: ${{ this.price }} </h6>
@@ -19,27 +20,33 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6 px-5">
             <div class="row">
                 <h2 class="mt-3">Formulario de alta</h2>
                 <hr>
                 <form id="productForm">
                     <input type="text" id="title" name="title" placeholder="Nombre del producto"
-                        class="form-control my-2">
+                        class="form-control my-2" required>
                     <input type="text" id="description" name="description" placeholder="Descripción"
-                        class="form-control my-2">
-                    <input type="numbre" id="code" name="code" placeholder="Código" class="form-control mb-2">
-                    <input type="number" id="price" name="price" placeholder="Precio" class="form-control mb-2">
-                    <input type="number" id="stock" name="stock" placeholder="Stock" class="form-control mb-2">
-                    <input type="text" id="category" name="category" placeholder="Categoria" class="form-control mb-2">
+                        class="form-control my-2" required>
+                    <input type="numbre" id="code" name="code" placeholder="Código" class="form-control mb-2" required>
+                    <input type="number" id="price" name="price" placeholder="Precio" class="form-control mb-2" required>
+                    <input type="number" id="stock" name="stock" placeholder="Stock" class="form-control mb-2" required>
+                    <input type="text" id="category" name="category" placeholder="Categoria" class="form-control mb-2" required>
                     <input type="file" id="thumbnail" name="thumbnail" class="form-control my-2">
                     <input id="add" class="btn btn-success" value="Agregar proucto">
                 </form>
             </div>
+            <div class="row">
+                <h2 class="mt-3">Formulario de Baja</h2>
+                <hr>
+                <form id="delForm">
+                    <input type="number" id="id" name="id" placeholder="ID del producto" class="form-control mb-2">
+                    <input id="del" class="btn btn-danger" value="Eliminar proucto">
+                </form>
+            </div>
         </div>
     </div>
-
-
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

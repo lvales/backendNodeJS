@@ -9,11 +9,20 @@ const stock = document.querySelector('#stock');
 const category = document.querySelector('#category');
 const thumbnail = document.querySelector('#thumbnail');
 const add = document.querySelector('#add');
+const id = document.querySelector('#id');
+const del = document.querySelector('#del');
 const miNodo = document.querySelector('#card');
 
-add.addEventListener('click', function () {
+add.addEventListener('click', async function() {
 
-  socket.emit('server', {
+  const data = new FormData(productForm);
+
+  await fetch('api/products', {
+    method:'POST',
+    body: data
+  });
+
+  socket.emit('server_addProduct', {
     title: title.value,
     description: description.value,
     code: code.value,
@@ -22,38 +31,28 @@ add.addEventListener('click', function () {
     category: category.value,
     thumbnail: thumbnail.value,
   });
+});
 
-  const data = new FormData(productForm);
+del.addEventListener('click', async function() {
 
-  fetch('api/products', {
-    method:'POST',
+  const route = 'api/products/' + id.value;
+  const data = new FormData(delForm);
+
+  await fetch(route, {
+    method:'DELETE',
     body: data
   });
 
-
+  socket.emit('server_delProduct', {
+    id: id.value,
+  });
 });
 
 
-socket.on('client', data => {
-  miNodo.innerHTML += `
-    <div class="card m-2" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">${data.title}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Codigo: ${data.code}</h6>
-        <h6 class="card-subtitle mb-2 text-muted">Precio: ${data.price} </h6>
-        <p class="card-text">${data.description}</p>
-      </div>
-    </div>
-  `
+socket.on('client_addProduct', data => {
+  location.reload();
 });
 
-
-
-
-  // socket.on('connect', () => {
-  //   console.log('Conectado al servidor');
-  // });
-
-  // socket.on('disconnect', () => {
-  //   console.log('Desconectado del servidor');
-  // });
+socket.on('client_delProduct', data => {
+  location.reload();
+});

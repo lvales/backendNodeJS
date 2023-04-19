@@ -33,9 +33,10 @@ app.use('/', viewRouter);
 
 socketServerIO.on('connection', socket => {
   console.log('Cliente conectado: ' + socket.id);
-  socket.on('server', data => {
-    console.log(data);
-    // listProducts.push(data);
-    socketServerIO.sockets.emit('client', data);
+  socket.on('server_addProduct', data => {
+    socketServerIO.sockets.emit('client_addProduct', data);
+  });
+  socket.on('server_delProduct', data => {
+    socketServerIO.sockets.emit('client_delProduct', data);
   });
 });

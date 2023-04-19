@@ -24,137 +24,14 @@
 	},
 	{
 		"title": "Zapatillas Puma",
-		"description": "Color rojo",
-		"code": "ZPM6548",
-		"price": "23500",
-		"stock": "100",
-		"category": "Calzado",
-		"thumbnail": "nike.jpg",
-		"id": 3
-	},
-	{
-		"title": "Zapatillas Flecha",
 		"description": "Color verde",
-		"code": "ZFL464",
-		"price": "15200",
+		"code": "ZPM456",
+		"price": "25600",
 		"stock": "200",
 		"category": "Calzado",
 		"thumbnail": [
-			"http://localhost:8080/images/undefined"
+			"http://localhost:8080/images/7d934e0f-abe9-4bd6-a937-7aa9f790a26c.jpg"
 		],
-		"id": 4
-	},
-	{
-		"title": "4343",
-		"description": "23423",
-		"code": "2342343",
-		"price": "234233",
-		"stock": "234233",
-		"category": "234233",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 5
-	},
-	{
-		"title": "4343",
-		"description": "23423",
-		"code": "2342343D",
-		"price": "234233",
-		"stock": "234233",
-		"category": "234233",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 6
-	},
-	{
-		"title": "4343",
-		"description": "23423",
-		"code": "2342343D4",
-		"price": "234233",
-		"stock": "234233",
-		"category": "234233",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 7
-	},
-	{
-		"title": "4343",
-		"description": "23423",
-		"code": "2342343D4Q",
-		"price": "234233",
-		"stock": "234233",
-		"category": "234233",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 8
-	},
-	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN12398",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 9
-	},
-	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1239",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 10
-	},
-	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1239D",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 11
-	},
-	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1239DW",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 12
-	},
-	{
-		"title": "Zapatillas Flecha256",
-		"description": "Zapatillas color azul y blanco",
-		"code": "ZPN1239DW3",
-		"price": "35400",
-		"status": "true",
-		"stock": "1500",
-		"category": "Calzado",
-		"thumbnail": [
-			"http://localhost:8080/images/undefined"
-		],
-		"id": 13
+		"id": 3
 	}
 ]

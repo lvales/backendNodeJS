@@ -47,10 +47,8 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
 
   const reqProduct = req.body;
 
-  console.log(req.body);
-  
   if(req.file){
-    const filename = req.file.thumbnail;
+    const filename = req.file.filename;
     reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];
   };
 

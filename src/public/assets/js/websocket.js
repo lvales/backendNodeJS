@@ -13,14 +13,17 @@ const id = document.querySelector('#id');
 const del = document.querySelector('#del');
 const miNodo = document.querySelector('#card');
 
-add.addEventListener('click', async function() {
+add.addEventListener('click', async function () {
 
-  const data = new FormData(productForm);
-
-  await fetch('api/products', {
-    method:'POST',
-    body: data
-  });
+  try {
+    const data = new FormData(productForm);
+    await fetch('api/products', {
+      method: 'POST',
+      body: data
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   socket.emit('server_addProduct', {
     title: title.value,
@@ -33,16 +36,18 @@ add.addEventListener('click', async function() {
   });
 });
 
-del.addEventListener('click', async function() {
+del.addEventListener('click', async function () {
 
-  const route = 'api/products/' + id.value;
-  const data = new FormData(delForm);
-
-  await fetch(route, {
-    method:'DELETE',
-    body: data
-  });
-
+  try {
+    const route = 'api/products/' + id.value;
+    const data = new FormData(delForm);
+    await fetch(route, {
+      method: 'DELETE',
+      body: data
+    });
+  } catch (error) {
+    console.log(error);
+  }
   socket.emit('server_delProduct', {
     id: id.value,
   });

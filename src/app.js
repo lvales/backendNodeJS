@@ -38,19 +38,23 @@ socketServerIO.on('connection', socket => {
 
   socket.on('server_addProduct', async data => {
     try {
-      await manager.addProduct(data);   
+      const res = await manager.addProduct(data);
+      if(!res.duplicate){
+        socketServerIO.sockets.emit('client_addProduct', data);
+      }
     } catch (error) {
       console.log(error);
     }
-    socketServerIO.sockets.emit('client_addProduct', data);
   });
 
   socket.on('server_delProduct', async data => {
     try {
-      await manager.deleteProduct(data.id);   
+      const res = await manager.deleteProduct(data.id);   
+      console.log(res);
+      if(!res.exists)
+      socketServerIO.sockets.emit('client_delProduct', data.id);
     } catch (error) {
       console.log(error);
     }
-    socketServerIO.sockets.emit('client_delProduct', data.id);
   });
 });

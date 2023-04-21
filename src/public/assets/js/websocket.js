@@ -32,9 +32,7 @@ del.addEventListener('click', function () {
   });
 });
 
-
 socket.on('client_addProduct', data => {
-  console.log(data);
     miNodo.innerHTML += `
       <div class="card m-2" style="width: 18rem;" id="${data.id}">
         <div class="card-body">

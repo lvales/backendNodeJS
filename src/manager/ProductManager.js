@@ -43,19 +43,19 @@ export default class ProductManager {
 
     const products = await this.getProducts();
 
+    let isDuplicate = products.find(e => e.code === product.code);
+    
+    if (isDuplicate) {
+      return {
+        duplicate: true
+      }
+    };
+
     if (products.length === 0) {
       product.id = 1;
       product.status = true;
     } else {
       product.id = products[products.length - 1].id + 1;
-    };
-
-    let isDuplicate = products.find(e => e.code === product.code);
-
-    if (isDuplicate) {
-      return {
-        duplicate: true
-      }
     };
 
     products.push(product);

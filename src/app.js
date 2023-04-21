@@ -5,8 +5,10 @@ import __dirname from "./utils.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
+import ProductManager from "./manager/ProductManager.js";
 
-const listProducts = [];
+
+const manager = new ProductManager("./data/products.json");
 
 // Express
 const PORT = 8080;
@@ -33,10 +35,22 @@ app.use('/', viewRouter);
 
 socketServerIO.on('connection', socket => {
   console.log('Cliente conectado: ' + socket.id);
-  socket.on('server_addProduct', data => {
+
+  socket.on('server_addProduct', async data => {
+    try {
+      await manager.addProduct(data);   
+    } catch (error) {
+      console.log(error);
+    }
     socketServerIO.sockets.emit('client_addProduct', data);
   });
-  socket.on('server_delProduct', data => {
-    socketServerIO.sockets.emit('client_delProduct', data);
+
+  socket.on('server_delProduct', async data => {
+    try {
+      await manager.deleteProduct(data.id);   
+    } catch (error) {
+      console.log(error);
+    }
+    socketServerIO.sockets.emit('client_delProduct', data.id);
   });
 });

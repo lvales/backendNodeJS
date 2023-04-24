@@ -95,10 +95,9 @@ export default class ProductManager {
   };
 
   deleteProduct = async (id_product) => {
+    
     const products = await this.getProducts();
     const id = parseInt(id_product);
-    // const id = id_product;
-    console.log(id);
     const index = products.findIndex(e => e.id === id);
     const removedProduct = products[index];
 

@@ -13,7 +13,6 @@ const idRemove = document.querySelector('#id');
 const del = document.querySelector('#del');
 const container = document.querySelector('#container');
 const miNodo = document.querySelector('#miNodo');
-const child = document.querySelector('#child');
 
 socket.on('client_getAllProduct', products =>{
   let child = '';

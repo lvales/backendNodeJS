@@ -5,18 +5,9 @@
                 <h2 class="mt-3">Productos disponibles</h2>
                 <hr>
                 <div style="height: 80vh; overflow-y: scroll;" id="container">
-                    {{#each productos}}
-                    <div class="card m-2" style="width: 18rem;" id="{{ this.id }}">
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-danger">ID: {{ this.id }}</h6>
-                            <h5 class="card-title">{{ this.title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Codigo: {{ this.code }}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Precio: ${{ this.price }} </h6>
-                            <p class="card-text">{{ this.description }}</p>
-                        </div>
+                    <div id="miNodo">
+                        <div id="child"></div>
                     </div>
-                    {{/each}}
-                    <div id="card"></div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,6 @@ import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
 import ProductManager from "./manager/ProductManager.js";
 
-
 const manager = new ProductManager("./data/products.json");
 
 // Express
@@ -33,28 +32,21 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartsRouter);
 app.use('/', viewRouter);
 
-socketServerIO.on('connection', socket => {
+socketServerIO.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
+  const products = await manager.getProducts();
+  socket.emit('client_getAllProduct', products);
+  
   socket.on('server_addProduct', async data => {
-    try {
-      const res = await manager.addProduct(data);
-      if(!res.duplicate){
-        socketServerIO.sockets.emit('client_addProduct', data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await manager.addProduct(data);
+    const products = await manager.getProducts();
+    socketServerIO.emit('client_getAllProduct', products);
   });
-
+  
   socket.on('server_delProduct', async data => {
-    try {
-      const res = await manager.deleteProduct(data.id);   
-      console.log(res);
-      if(!res.exists)
-      socketServerIO.sockets.emit('client_delProduct', data.id);
-    } catch (error) {
-      console.log(error);
-    }
+    await manager.deleteProduct(data.id);
+    const products = await manager.getProducts();
+    socketServerIO.emit('client_getAllProduct', products);
   });
 });

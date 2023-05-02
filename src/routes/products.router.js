@@ -5,7 +5,8 @@ import { uploader } from "../utils.js";
 const router = Router();
 const manager = new ProductManager("./data/products.json");
 
-
+// Rutas
+// Obtener todos los productos
 router.get("/", async (req, res) => {
   const limit = req.query.limit;
   const products = await manager.getProducts();
@@ -22,9 +23,8 @@ router.get("/", async (req, res) => {
   });
 });
 
-
+// Obtener producto por id
 router.get("/:id", async (req, res) => {
-
   const idProduct = req.params.id;
   const product = await manager.getProductById(idProduct);
 
@@ -42,9 +42,8 @@ router.get("/:id", async (req, res) => {
 
 });
 
-
+// Agregar producto
 router.post("/", uploader.single("thumbnail"), async (req, res) => {
-
   const reqProduct = req.body;
 
   if(req.file){
@@ -73,9 +72,8 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
   });
 });
 
-
+// Modificar producto
 router.put("/:id", async (req, res) => {
-
   const reqProduct = req.body;
   const id = req.params.id;
 
@@ -93,11 +91,9 @@ router.put("/:id", async (req, res) => {
   });
 });
 
-
+// Eliminar producto
 router.delete("/:id", async (req, res) => {
-
   const id = req.params.id;
-
   const deleteProduct = await manager.deleteProduct(id);
 
   if (deleteProduct.exists === false) {

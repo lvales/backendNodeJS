@@ -14,7 +14,19 @@ const del = document.querySelector('#del');
 const container = document.querySelector('#container');
 const miNodo = document.querySelector('#miNodo');
 
-socket.on('client_getAllProduct', products =>{
+// Notificaciones
+socket.on('alert', (data) => {
+  Toastify({
+    text: data.msg,
+    className: data.type,
+    style: {
+      background: data.color,
+    }
+  }).showToast();
+});
+
+// Obtener productos
+socket.on('client_getAllProduct', products => {
   let child = '';
   products.forEach(e => {
     child += `
@@ -28,10 +40,11 @@ socket.on('client_getAllProduct', products =>{
       </div>
     </div>
   `;
-  miNodo.innerHTML = child;
-});
+    miNodo.innerHTML = child;
+  });
 });
 
+// Agregar producto
 add.addEventListener('click', function () {
   event.preventDefault();
   socket.emit('server_addProduct', {
@@ -43,8 +56,10 @@ add.addEventListener('click', function () {
     category: category.value,
     thumbnail: thumbnail.value,
   });
+  productForm.reset();
 });
 
+// Eliminar producto
 del.addEventListener('click', function () {
   event.preventDefault();
   socket.emit('server_delProduct', {

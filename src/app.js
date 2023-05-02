@@ -32,21 +32,33 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartsRouter);
 app.use('/', viewRouter);
 
+// Websocket
 socketServerIO.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
+  // Obtener productos y emitir al cliente
   const products = await manager.getProducts();
   socket.emit('client_getAllProduct', products);
-  
+
+  // Agregar producto al array  y emitir a todos los clientes
   socket.on('server_addProduct', async data => {
     await manager.addProduct(data);
     const products = await manager.getProducts();
     socketServerIO.emit('client_getAllProduct', products);
+    socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color:'LimeGreen' });
+    socket.broadcast.emit('alert', { type: 'success', msg: 'Producto agregado recientemente', color:'DeepSkyBlue' });
   });
-  
+
+  // Eliminar producto del array y emitir a todos los clientes
   socket.on('server_delProduct', async data => {
-    await manager.deleteProduct(data.id);
-    const products = await manager.getProducts();
-    socketServerIO.emit('client_getAllProduct', products);
+    const resp = await manager.deleteProduct(data.id);
+
+    if (resp.exists === false) {
+      socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color:'Crimson' });
+    } else {
+      const products = await manager.getProducts();
+      socketServerIO.emit('client_getAllProduct', products);
+      socket.emit('alert', { type: 'error', msg: 'Producto eliminado correctamente', color:'DarkOrange' });
+    }
   });
 });

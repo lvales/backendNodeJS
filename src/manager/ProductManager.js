@@ -1,14 +1,13 @@
 import fs from 'fs';
 
-
 export default class ProductManager {
 
   constructor(path) {
     this.path = path;
   };
 
+  // Métodos
   getProducts = async () => {
-
     if (!fs.existsSync(this.path)) return [];
 
     try {
@@ -21,7 +20,6 @@ export default class ProductManager {
   };
 
   getProductById = async (idProduct) => {
-
     const products = await this.getProducts();
     const product = products.find(product => product.id === parseInt(idProduct));
 
@@ -34,7 +32,6 @@ export default class ProductManager {
   };
 
   addProduct = async (product) => {
-
     if (!product.title || !product.description || !product.code || !product.price || !product.stock || !product.category) {
       return {
         incomplete: true
@@ -44,7 +41,7 @@ export default class ProductManager {
     const products = await this.getProducts();
 
     let isDuplicate = products.find(e => e.code === product.code);
-    
+
     if (isDuplicate) {
       return {
         duplicate: true
@@ -70,7 +67,6 @@ export default class ProductManager {
   };
 
   updateProducts = async (id_product, updateProduct) => {
-
     const products = await this.getProducts();
     const id = parseInt(id_product);
     const index = products.findIndex(e => e.id === id);
@@ -95,7 +91,6 @@ export default class ProductManager {
   };
 
   deleteProduct = async (id_product) => {
-    
     const products = await this.getProducts();
     const id = parseInt(id_product);
     const index = products.findIndex(e => e.id === id);

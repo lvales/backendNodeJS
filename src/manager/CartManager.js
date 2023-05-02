@@ -6,8 +6,8 @@ export default class CartManager {
     this.path = path;
   };
 
+  // Métodos
   getCartProducts = async () => {
-
     if (!fs.existsSync(this.path)) return []
 
     try {
@@ -29,7 +29,6 @@ export default class CartManager {
   }
 
   createCart = async () => {
-
     const cartProduct = {
       "products": []
     }

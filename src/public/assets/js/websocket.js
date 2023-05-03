@@ -56,7 +56,6 @@ add.addEventListener('click', function () {
 // Eliminar producto
 del.addEventListener('click', function () {
   event.preventDefault();
-  console.log(idRemove.value);
   socket.emit('server_delProduct', {
     id: idRemove.value,
   });

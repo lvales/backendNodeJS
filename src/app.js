@@ -45,8 +45,8 @@ socketServerIO.on('connection', async socket => {
     await manager.addProduct(data);
     const products = await manager.getProducts();
     socketServerIO.emit('client_getAllProduct', products);
-    socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color:'LimeGreen' });
-    socket.broadcast.emit('alert', { type: 'success', msg: 'Producto agregado recientemente', color:'DeepSkyBlue' });
+    socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color:'YellowGreen' });
+    socket.broadcast.emit('alert', { type: 'success', msg: 'Producto agregado recientemente', color:'DodgerBlue' });
   });
 
   // Eliminar producto del array y emitir a todos los clientes

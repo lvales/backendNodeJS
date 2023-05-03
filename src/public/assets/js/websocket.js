@@ -1,16 +1,10 @@
 const socket = io();
 
 const productForm = document.querySelector('#productForm');
-const title = document.querySelector('#title');
-const description = document.querySelector('#description');
-const code = document.querySelector('#code');
-const price = document.querySelector('#price');
-const stock = document.querySelector('#stock');
-const category = document.querySelector('#category');
-const thumbnail = document.querySelector('#thumbnail');
+const delForm = document.querySelector('#delForm');
 const add = document.querySelector('#add');
-const idRemove = document.querySelector('#id');
 const del = document.querySelector('#del');
+const idRemove = document.querySelector('#id');
 const container = document.querySelector('#container');
 const miNodo = document.querySelector('#miNodo');
 
@@ -48,13 +42,13 @@ socket.on('client_getAllProduct', products => {
 add.addEventListener('click', function () {
   event.preventDefault();
   socket.emit('server_addProduct', {
-    title: title.value,
-    description: description.value,
-    code: code.value,
-    price: price.value,
-    stock: stock.value,
-    category: category.value,
-    thumbnail: thumbnail.value,
+    title: productForm.title.value,
+    description: productForm.description.value,
+    code: productForm.code.value,
+    price: productForm.price.value,
+    stock: productForm.stock.value,
+    category: productForm.category.value,
+    thumbnail: productForm.thumbnail.value,
   });
   productForm.reset();
 });
@@ -62,7 +56,9 @@ add.addEventListener('click', function () {
 // Eliminar producto
 del.addEventListener('click', function () {
   event.preventDefault();
+  console.log(idRemove.value);
   socket.emit('server_delProduct', {
     id: idRemove.value,
   });
+  delForm.reset();
 });

@@ -1,13 +1,15 @@
 import express from "express";
+import mongoose from 'mongoose';
 import { Server } from "socket.io";
 import handelbars from "express-handlebars";
 import __dirname from "./utils.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
-import ProductManager from "./manager/ProductManager.js";
+import ProductDao from "./dao/ProductDAO.js";
 
-const manager = new ProductManager("./data/products.json");
+// DAO
+const dao = new ProductDao();
 
 // Express
 const PORT = 8080;
@@ -15,6 +17,11 @@ const app = express();
 const server = app.listen(PORT, () =>
   console.log(`Servidor funcionando en el puerto: ${PORT}`)
 );
+
+// MongoDB
+const MONGO = 'mongodb+srv://lvales73:lvales@ecommerce.boh09dt.mongodb.net/?retryWrites=true&w=majority';
+const conection = mongoose.connect(MONGO);
+
 // Socket.io
 const socketServerIO = new Server(server);
 
@@ -36,29 +43,30 @@ app.use('/', viewRouter);
 socketServerIO.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
-  // Obtener productos y emitir al cliente
-  const products = await manager.getProducts();
+  // Obtiene productos y emite al cliente
+  const products = await dao.getProducts();
   socket.emit('client_getAllProduct', products);
 
-  // Agregar producto al array  y emitir a todos los clientes
+  // Agrega producto y emite a todos los clientes
   socket.on('server_addProduct', async data => {
-    await manager.addProduct(data);
-    const products = await manager.getProducts();
+    await dao.addProduct(data);
+    const products = await dao.getProducts();
     socketServerIO.emit('client_getAllProduct', products);
     socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color:'YellowGreen' });
     socket.broadcast.emit('alert', { type: 'success', msg: 'Producto agregado recientemente', color:'DodgerBlue' });
   });
 
-  // Eliminar producto del array y emitir a todos los clientes
+  // Elimina producto y emite a todos los clientes
   socket.on('server_delProduct', async data => {
-    const resp = await manager.deleteProduct(data.id);
-
+    console.log(data);
+    const resp = await dao.deleteProduct(data);
+    // Si el producto no existe
     if (resp.exists === false) {
       socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color:'Crimson' });
     } else {
-      const products = await manager.getProducts();
+      const products = await dao.getProducts();
       socketServerIO.emit('client_getAllProduct', products);
-      socket.emit('alert', { type: 'error', msg: 'Producto eliminado correctamente', color:'DarkOrange' });
+      socket.emit('alert', { type: 'success', msg: 'Producto eliminado correctamente', color:'DarkOrange' });
     }
   });
 });

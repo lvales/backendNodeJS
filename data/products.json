@@ -33,5 +33,15 @@
 			"http://localhost:8080/images/7d934e0f-abe9-4bd6-a937-7aa9f790a26c.jpg"
 		],
 		"id": 3
+	},
+	{
+		"title": "Puma",
+		"description": "Zapatillas de cuero blancas",
+		"code": "ZPM123",
+		"price": "23000",
+		"stock": "200",
+		"category": "Calzado",
+		"thumbnail": "",
+		"id": 4
 	}
 ]

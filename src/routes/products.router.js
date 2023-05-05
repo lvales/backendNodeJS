@@ -1,15 +1,15 @@
 import { Router } from "express";
-import ProductManager from "../manager/ProductManager.js";
 import { uploader } from "../utils.js";
+import ProductDao from "../dao/ProductDAO.js";
 
 const router = Router();
-const manager = new ProductManager("./data/products.json");
+const dao = new ProductDao();
 
 // Rutas
 // Obtener todos los productos
 router.get("/", async (req, res) => {
   const limit = req.query.limit;
-  const products = await manager.getProducts();
+  const products = await dao.getProducts();
 
   if (limit) {
     const productsLimit = products.slice(0, limit);
@@ -25,8 +25,8 @@ router.get("/", async (req, res) => {
 
 // Obtener producto por id
 router.get("/:id", async (req, res) => {
-  const idProduct = req.params.id;
-  const product = await manager.getProductById(idProduct);
+  const pid = req.params.id;
+  const product = await dao.getProductById(pid);
 
   if(product.exists === false){
     return res.status(404).send({
@@ -45,27 +45,29 @@ router.get("/:id", async (req, res) => {
 // Agregar producto
 router.post("/", uploader.single("thumbnail"), async (req, res) => {
   const reqProduct = req.body;
-
+  
   if(req.file){
     const filename = req.file.filename;
     reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];
   };
+  
+  const product = await dao.addProduct(reqProduct);
 
-  const product = await manager.addProduct(reqProduct);
-
+  // Producto incompleto
   if (product.incomplete === true) {
     return res.status(409).send({
-      status: 'ERROR',
-      msg: 'Producto incompleto, faltan parametros'
+      status: 'ERROR: Producto incompleto',
+      msg: 'Producto incompleto, faltan parametros, debe completarlos todos'
+    });
+  }
+  // Producto duplicado
+  if (product.duplicate === true) {
+    return res.status(409).send({
+      status: 'ERROR: Producto duplicado',
+      msg: 'El codigo de producto ya exixte en la base de datos'
     });
   }
 
-  if (product.duplicate === true) {
-    return res.status(409).send({
-      status: 'ERROR',
-      msg: 'El codigo de producto ya exixte'
-    });
-  }
   return res.send({
     status: 'success',
     product
@@ -75,36 +77,44 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
 // Modificar producto
 router.put("/:id", async (req, res) => {
   const reqProduct = req.body;
-  const id = req.params.id;
+  const pid = parseInt(req.params.id);
 
-  const updateProduct = await manager.updateProducts(id, reqProduct);
+  const updateProduct = await dao.updateProduct(pid, reqProduct);
 
   if (updateProduct.exists === false) {
     return res.status(404).send({
-      status: 'ERROR',
+      status: 'ERROR: Producto no encontrado',
       msg: `El producto con id ${id} no existe`
     });
   }
+
+  if (updateProduct.duplicate === true) {
+    return res.status(404).send({
+      status: 'ERROR: Codigo duplicado',
+      msg: `El codigo ${reqProduct.code} ya existe en otro producto de la base de datos`
+    });
+  }
+
   return res.send({
     status: 'success',
-    updateProduct
+    msg: `El producto con id ${pid} fue modificado`
   });
 });
 
 // Eliminar producto
 router.delete("/:id", async (req, res) => {
-  const id = req.params.id;
-  const deleteProduct = await manager.deleteProduct(id);
+  const pid = req.params.id;
+  const deleteProduct = await dao.deleteProduct(pid);
 
-  if (deleteProduct.exists === false) {
+  if (deleteProduct.deletedCount === 0) {
     return res.status(404).send({
-      status: 'ERROR',
-      msg: `El producto con id ${id} no existe`
+      status: 'ERROR: inexistente',
+      msg: `El producto con id ${pid} no existe`
     });
   }
   return res.send({
     status: 'success',
-    deleteProduct
+    msg: `El producto con id ${pid} fue eliminado`
   });
 });
 

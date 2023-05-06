@@ -8,6 +8,9 @@ import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
 import ProductDao from "./dao/ProductDAO.js";
 
+//  Array de mensajes del chat
+const messageChat = [];
+
 // DAO
 const dao = new ProductDao();
 
@@ -23,7 +26,7 @@ const MONGO = 'mongodb+srv://lvales73:lvales@ecommerce.boh09dt.mongodb.net/?retr
 const conection = mongoose.connect(MONGO);
 
 // Socket.io
-const socketServerIO = new Server(server);
+const io = new Server(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,7 +43,7 @@ app.use("/api/cart", cartsRouter);
 app.use('/', viewRouter);
 
 // Websocket
-socketServerIO.on('connection', async socket => {
+io.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
   // Obtiene productos y emite al cliente
@@ -51,9 +54,9 @@ socketServerIO.on('connection', async socket => {
   socket.on('server_addProduct', async data => {
     await dao.addProduct(data);
     const products = await dao.getProducts();
-    socketServerIO.emit('client_getAllProduct', products);
-    socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color:'YellowGreen' });
-    socket.broadcast.emit('alert', { type: 'success', msg: 'Producto agregado recientemente', color:'DodgerBlue' });
+    io.emit('client_getAllProduct', products);
+    socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color: 'YellowGreen' });
+    socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });
   });
 
   // Elimina producto y emite a todos los clientes
@@ -62,11 +65,18 @@ socketServerIO.on('connection', async socket => {
     const resp = await dao.deleteProduct(data);
     // Si el producto no existe
     if (resp.exists === false) {
-      socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color:'Crimson' });
+      socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color: 'Crimson' });
     } else {
       const products = await dao.getProducts();
-      socketServerIO.emit('client_getAllProduct', products);
-      socket.emit('alert', { type: 'success', msg: 'Producto eliminado correctamente', color:'DarkOrange' });
+      io.emit('client_getAllProduct', products);
+      socket.emit('alert', { type: 'success', msg: 'Producto eliminado correctamente', color: 'DarkOrange' });
+      socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });
     }
+  });
+
+  // Chat 
+  socket.on('chat', data => {
+    messageChat.push(data);
+    io.emit('chat', messageChat);
   });
 });

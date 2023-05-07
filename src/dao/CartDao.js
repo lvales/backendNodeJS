@@ -6,7 +6,6 @@ const productDao = new ProductDao();
 export default class CartDao {
    // Métodos
    getCartProducts = async () => {
-      s
       try {
          const result = await CartModule.find().lean();
          return result;
@@ -37,10 +36,8 @@ export default class CartDao {
          cartProduct.cid = cartProducts[cartProducts.length - 1].cid + 1;
       };
 
-      cartProducts.push(cartProduct);
-
       try {
-         const result = await CartModule.create(cartProducts);
+         const result = await CartModule.create(cartProduct);
          return result;
       } catch (error) {
          console.log(error);

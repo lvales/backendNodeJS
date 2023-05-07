@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { stringify } from "uuid";
 
 const collection = 'messages';
 
@@ -11,7 +10,13 @@ const schema = new mongoose.Schema({
    message:{
       type: String,
       require: true
-   }
+   },
+   createdAt: {
+      type: Date,
+      default: Date.now()
+   },
 });
 
 const MessageModel = mongoose.model(collection, schema);
+
+export default MessageModel;

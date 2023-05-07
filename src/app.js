@@ -7,12 +7,14 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
 import ProductDao from "./dao/ProductDAO.js";
+import MessageDao from "./dao/MessageDao.js";
 
 //  Array de mensajes del chat
 const messageChat = [];
 
-// DAO
-const dao = new ProductDao();
+// Dao
+const productDao = new ProductDao();
+const messageDao = new MessageDao();
 
 // Express
 const PORT = 8080;
@@ -22,7 +24,7 @@ const server = app.listen(PORT, () =>
 );
 
 // MongoDB
-const MONGO = 'mongodb+srv://lvales73:lvales@ecommerce.boh09dt.mongodb.net/?retryWrites=true&w=majority';
+const MONGO = 'mongodb+srv://lvales:lvales@ecommerce.5m5kksr.mongodb.net/?retryWrites=true&w=majority';
 const conection = mongoose.connect(MONGO);
 
 // Socket.io
@@ -47,13 +49,13 @@ io.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
   // Obtiene productos y emite al cliente
-  const products = await dao.getProducts();
+  const products = await productDao.getProducts();
   socket.emit('client_getAllProduct', products);
 
   // Agrega producto y emite a todos los clientes
   socket.on('server_addProduct', async data => {
-    await dao.addProduct(data);
-    const products = await dao.getProducts();
+    await productDao.addProduct(data);
+    const products = await productDao.getProducts();
     io.emit('client_getAllProduct', products);
     socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color: 'YellowGreen' });
     socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });
@@ -61,13 +63,12 @@ io.on('connection', async socket => {
 
   // Elimina producto y emite a todos los clientes
   socket.on('server_delProduct', async data => {
-    console.log(data);
-    const resp = await dao.deleteProduct(data);
+    const result = await productDao.deleteProduct(data);
     // Si el producto no existe
-    if (resp.exists === false) {
+    if (result.deletedCount === 0) {
       socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color: 'Crimson' });
     } else {
-      const products = await dao.getProducts();
+      const products = await productDao.getProducts();
       io.emit('client_getAllProduct', products);
       socket.emit('alert', { type: 'success', msg: 'Producto eliminado correctamente', color: 'DarkOrange' });
       socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });
@@ -75,7 +76,8 @@ io.on('connection', async socket => {
   });
 
   // Chat 
-  socket.on('chat', data => {
+  socket.on('chat', async data => {
+    const result = await messageDao.createMessage(data);
     messageChat.push(data);
     io.emit('chat', messageChat);
   });

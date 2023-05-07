@@ -1,4 +1,3 @@
-import { create } from "express-handlebars";
 import mongoose from "mongoose";
 
 const collection = 'carts';
@@ -17,6 +16,10 @@ const schema = new mongoose.Schema({
          quantity: {
             type: Number,
             required: true
+         },
+         createdAt: {
+            type: Date,
+            default: Date.now()
          }
       }
    ],

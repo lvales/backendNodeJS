@@ -4,7 +4,6 @@ import CartDao from "../dao/CartDao.js";
 const router = Router();
 const dao = new CartDao();
 
-
 // Rutas
 // Obtener todos los carritos
 router.get('/', async (req, res) => {

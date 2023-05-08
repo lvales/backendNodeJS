@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { uploader } from "../utils.js";
-import ProductDao from "../dao/ProductDAO.js";
+import ProductDao from "../dao/ProductDao.js";
 
 const router = Router();
 const dao = new ProductDao();
@@ -31,7 +31,7 @@ router.get("/:id", async (req, res) => {
   if(product.exists === false){
     return res.status(404).send({
       status: 'ERROR',
-      msg: `El producto con id ${idProduct} no existe.`
+      msg: `El producto con id ${pid} no existe.`
     });
   }
 

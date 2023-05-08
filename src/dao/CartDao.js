@@ -1,5 +1,5 @@
 import CartModule from './models/cart.model.js';
-import ProductDao from './ProductDAO.js';
+import ProductDao from './ProductDao.js';
 
 const productDao = new ProductDao();
 

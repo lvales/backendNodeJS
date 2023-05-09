@@ -5,7 +5,8 @@ const collection = 'products';
 const schema = new mongoose.Schema({
    title: {
       type: String,
-      required: true
+      required: true,
+      index: true
    },
    description: {
       type: String,
@@ -14,7 +15,8 @@ const schema = new mongoose.Schema({
    code: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      index: true
    },
    price: {
       type: Number,

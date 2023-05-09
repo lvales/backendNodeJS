@@ -7,7 +7,7 @@ export default class CartDao {
    // Métodos
    getCartProducts = async () => {
       try {
-         const result = await CartModule.find().lean();
+         const result = await CartModule.find().lean().populate('products.product');
          return result;
       } catch (error) {
          console.log(error);
@@ -16,7 +16,7 @@ export default class CartDao {
 
    getCartProductById = async (cid) => {
       try {
-         const result = await CartModule.findOne({ _id: cid });
+         const result = await CartModule.findOne({ _id: cid }).populate('products.product');
          return result;
       } catch (error) {
          console.log(error);

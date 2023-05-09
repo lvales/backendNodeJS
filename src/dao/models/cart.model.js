@@ -10,7 +10,11 @@ const schema = new mongoose.Schema({
                type: mongoose.Schema.Types.ObjectId,
                ref: "products",
             },
-            quantity:Number
+            quantity:Number,
+            createdAt: {
+               type: Date,
+               default: Date.now()
+            }
          }
       ],
       default:[]

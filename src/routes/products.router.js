@@ -52,6 +52,7 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
   };
   
   const product = await dao.addProduct(reqProduct);
+  console.log(product);
 
   // Producto incompleto
   if (product.incomplete === true) {
@@ -77,7 +78,7 @@ router.post("/", uploader.single("thumbnail"), async (req, res) => {
 // Modificar producto
 router.put("/:id", async (req, res) => {
   const reqProduct = req.body;
-  const pid = parseInt(req.params.id);
+  const pid = req.params.id;
 
   const updateProduct = await dao.updateProduct(pid, reqProduct);
 

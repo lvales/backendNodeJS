@@ -14,7 +14,7 @@ export default class ProductDao {
 
    getProductById = async (pid) => {
       try {
-         const product = await ProductModule.findOne({ pid: pid });
+         const product = await ProductModule.findOne({ _id: pid });
          return product;
       } catch (error) {
          console.log(error);
@@ -51,14 +51,6 @@ export default class ProductDao {
          status: status || true,
       }
 
-      // Asigna id al nuevo producto
-      const data = await this.getProducts();
-      if (data.length === 0) {
-         newProduct.pid = 1;
-      } else {
-         newProduct.pid = data[data.length - 1].pid + 1;
-      };
-
       try {
          const result = await ProductModule.create(newProduct);
          return result;
@@ -68,7 +60,7 @@ export default class ProductDao {
    }
 
    updateProduct = async (pid, product) => {
-
+      console.log(pid);
       // Valida que no exista un producto con el mismo codigo
       let isDuplicateCode = await ProductModule.find({ code: product.code });
       if (isDuplicateCode.length > 0) {
@@ -78,9 +70,10 @@ export default class ProductDao {
       }
       // Actualiza el producto
       const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
+      console.log(updateProduct);
 
       try {
-         const result = await ProductModule.updateOne({ pid: pid }, { $set: updateProduct });
+         const result = await ProductModule.updateOne({ _id: pid }, { $set: updateProduct });
          return result;
       } catch (error) {
          console.log(error);
@@ -89,7 +82,7 @@ export default class ProductDao {
 
    deleteProduct = async (pid) => {
       try {
-         const result = await ProductModule.deleteOne({ pid: pid });
+         const result = await ProductModule.deleteOne({ _id: pid });
          return result;
       } catch (error) {
          console.log(error);

@@ -3,12 +3,6 @@ import mongoose from "mongoose";
 const collection = 'products';
 
 const schema = new mongoose.Schema({
-   pid: {
-      type: Number,
-      required: true,
-      unique: true
-   },
-
    title: {
       type: String,
       required: true

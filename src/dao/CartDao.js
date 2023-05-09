@@ -16,7 +16,7 @@ export default class CartDao {
 
    getCartProductById = async (cid) => {
       try {
-         const result = await CartModule.findOne({ cid: cid });
+         const result = await CartModule.findOne({ _id: cid });
          return result;
       } catch (error) {
          console.log(error);
@@ -27,15 +27,6 @@ export default class CartDao {
       const cartProduct = {
          "products": []
       }
-
-      // Asigna id al nuevo carrito
-      const cartProducts = await this.getCartProducts();
-      if (cartProducts.length === 0) {
-         cartProduct.cid = 1;
-      } else {
-         cartProduct.cid = cartProducts[cartProducts.length - 1].cid + 1;
-      };
-
       try {
          const result = await CartModule.create(cartProduct);
          return result;
@@ -53,24 +44,22 @@ export default class CartDao {
       if (!cartProduct) return { existCart: false }
       if (!existProduct) return { existProduct: false }
       
-      const product = cartProduct.products.find(e => e.pid === parseInt(pid));
-
+      const result = cartProduct.products.find(e => e.product.toString() === pid);
       // Si no existe el producto en el carrito, lo agrega
-      if (!product || product.pid !== parseInt(pid)) {
+      if (!result || result.product.toString() !== pid) { 
          cartProduct.products.push({
-            pid: pid,
+            product: existProduct._id,
             quantity: 1
          });
       } else {
          // Si existe el producto, aumenta la cantidad
-         console.log('Si existe el producto');
-         product.quantity += 1;
+         result.quantity += 1;
       }
 
       cartProduct.updatedAt = Date.now();
 
       try {
-         const result = await CartModule.updateOne({ cid: cid }, cartProduct);
+         const result = await CartModule.updateOne({ _id: cid }, cartProduct);
          return result;
 
       } catch (error) {

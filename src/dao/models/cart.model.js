@@ -3,26 +3,18 @@ import mongoose from "mongoose";
 const collection = 'carts';
 
 const schema = new mongoose.Schema({
-   cid: {
-      type: Number,
-      required: true
-   },
-   products: [
-      {
-         pid: {
-            type: Number,
-            required: true
-         },
-         quantity: {
-            type: Number,
-            required: true
-         },
-         createdAt: {
-            type: Date,
-            default: Date.now()
+   products: {
+      type: [
+         {
+            product: {
+               type: mongoose.Schema.Types.ObjectId,
+               ref: "products",
+            },
+            quantity:Number
          }
-      }
-   ],
+      ],
+      default:[]
+   },
    createdAt: {
       type: Date,
       default: Date.now()

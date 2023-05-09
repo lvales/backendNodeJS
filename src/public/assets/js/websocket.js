@@ -24,9 +24,9 @@ socket.on('client_getAllProduct', products => {
   let child = '';
   products.forEach(e => {
     child += `
-    <div class="card m-2" style="width: 18rem;" id="${e.id}">
+    <div class="card m-2" style="width: 18rem;" id="${e._id}">
       <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-danger">ID: ${e.pid}</h6>
+          <h6 class="card-subtitle mb-2 text-danger">ID: ${e._id}</h6>
           <h5 class="card-title">${e.title}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Codigo: ${e.code}</h6>
           <h6 class="card-subtitle mb-2 text-muted">Precio: $${e.price} </h6>

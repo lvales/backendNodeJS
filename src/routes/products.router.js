@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { uploader } from "../utils.js";
-import ProductDao from "../dao/ProductDao.js";
+import ProductDao from "../dao/mongoDb/ProductDao.js";
 
 const router = Router();
 const dao = new ProductDao();

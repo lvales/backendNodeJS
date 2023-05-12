@@ -6,8 +6,8 @@ import __dirname from "./utils.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
-import ProductDao from "./dao/ProductDao.js";
-import MessageDao from "./dao/MessageDao.js";
+import ProductDao from "./dao/mongoDb/ProductDao.js";
+import MessageDao from "./dao/mongoDb/MessageDao.js";
 
 //  Array de mensajes del chat
 const messageChat = [];

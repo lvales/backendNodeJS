@@ -8,18 +8,16 @@ const dao = new ProductDao();
 // Rutas
 // Obtener todos los productos
 router.get("/", async (req, res) => {
-  const limit = req.query.limit;
-  const products = await dao.getProducts();
+  const limit = req.query.limit || 10;
+  const page = req.query.page || 1;
+  const  query  = req.query.query ;
+  const sort = req.query.sort;
 
-  if (limit) {
-    const productsLimit = products.slice(0, limit);
-    return res.send({
-      status: 'success',
-      products: productsLimit,
-    });
-  }
+  const result = await dao.getProducts(limit, page, query, sort);
+
   return res.send({
-    products: products,
+    satus: 'success',
+    payload: result
   });
 });
 

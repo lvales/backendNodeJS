@@ -3,10 +3,21 @@ import ProductModule from './models/product.model.js';
 export default class ProductDao {
 
    // Metodos
-   getProducts = async () => {
+   getProducts = async (limit, page, query, sort) => {
       try {
-         const products = await ProductModule.find().lean();
-         return products;
+         const {docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage} = await ProductModule.paginate(query,{limit, page, sort:{price: sort}, lean:true });
+         const products = docs;
+         return {
+             products,
+             totalPage,
+             prevPage, 
+             nextPage,
+             page,
+             hasPrevPage,
+             hasNextPage,
+            //  prevLink, 
+            //  nextLink
+         }
       } catch (error) {
          console.log(error);
       }

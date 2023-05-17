@@ -22,7 +22,7 @@ socket.on('alert', (data) => {
 // Obtener productos
 socket.on('client_getAllProduct', products => {
   let child = '';
-  products.forEach(e => {
+  products.products.forEach(e => {
     child += `
     <div class="card m-2" style="width: 18rem;" id="${e._id}">
       <div class="card-body">

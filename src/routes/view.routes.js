@@ -18,8 +18,19 @@ router.get('/realtimeproducts', (req, res) => {
   res.render('realTimeProducts', {});
 });
 
+// Route chat
 router.get('/chat', (req, res) => {
   res.render('chat', {});
+});
+
+// Route para vizualizar productos 
+router.get('/products', (req, res) => {
+  res.render('products', {});
+});
+
+// Route para vizualizar carrito
+router.get('/carts/:cid', (req, res) => {
+  res.render('cartId', {});
 });
 
 export default router;

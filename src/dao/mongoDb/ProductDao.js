@@ -5,16 +5,17 @@ export default class ProductDao {
    // Metodos
    getProducts = async (limit, page, query, sort) => {
       try {
-         const {docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage} = await ProductModule.paginate(query,{limit, page, sort:{price: sort}, lean:true });
+         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate(query, { limit, page, sort: { price: sort }, lean: true });
          const products = docs;
+         if (products.length === 0) return { exists: false };
          return {
-             products,
-             totalPage,
-             prevPage, 
-             nextPage,
-             page,
-             hasPrevPage,
-             hasNextPage,
+            products,
+            totalPage,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
             //  prevLink, 
             //  nextLink
          }
@@ -26,6 +27,7 @@ export default class ProductDao {
    getProductById = async (pid) => {
       try {
          const product = await ProductModule.findOne({ _id: pid });
+         if (!product) return { exists: false };
          return product;
       } catch (error) {
          console.log(error);
@@ -35,14 +37,10 @@ export default class ProductDao {
    addProduct = async (product) => {
 
       const { title, description, code, price, stock, category, thumbnail, status } = product;
-
       // Valida que no falte ningun campo
       if (!title || !description || !code || !price || !stock || !category) {
-         return {
-            incomplete: true
-         }
+         return { incomplete: true };
       }
-
       // Valida que no exista un producto con el mismo codigo
       let isDuplicate = await ProductModule.find({ code: code });
       if (isDuplicate.length > 0) {
@@ -71,7 +69,6 @@ export default class ProductDao {
    }
 
    updateProduct = async (pid, product) => {
-      console.log(pid);
       // Valida que no exista un producto con el mismo codigo
       let isDuplicateCode = await ProductModule.find({ code: product.code });
       if (isDuplicateCode.length > 0) {
@@ -81,7 +78,6 @@ export default class ProductDao {
       }
       // Actualiza el producto
       const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
-      console.log(updateProduct);
 
       try {
          const result = await ProductModule.updateOne({ _id: pid }, { $set: updateProduct });

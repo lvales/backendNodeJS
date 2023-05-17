@@ -1,3 +1,4 @@
+import CartModel from './models/cart.model.js';
 import CartModule from './models/cart.model.js';
 import ProductDao from './ProductDao.js';
 
@@ -8,6 +9,7 @@ export default class CartDao {
    getCartProducts = async () => {
       try {
          const result = await CartModule.find().lean().populate('products.product');
+         if (result.length === 0) return { exists: false };
          return result;
       } catch (error) {
          console.log(error);
@@ -37,16 +39,16 @@ export default class CartDao {
 
 
    addProductCart = async (cid, pid) => {
+      // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);
       const existProduct = await productDao.getProductById(pid);
-
-      // Valida que exista el carrito y el producto
       if (!cartProduct) return { existCart: false }
       if (!existProduct) return { existProduct: false }
-      
-      const result = cartProduct.products.find(e => e.product.toString() === pid);
+      // console.log(cartProduct.products[0].product._id.toString());
+      const result = cartProduct.products.find(e => e.product._id.toString() === pid);
+
       // Si no existe el producto en el carrito, lo agrega
-      if (!result || result.product.toString() !== pid) { 
+      if (!result) {
          cartProduct.products.push({
             product: existProduct._id,
             quantity: 1
@@ -64,6 +66,73 @@ export default class CartDao {
 
       } catch (error) {
          console.log(error);
+      }
+   }
+
+
+   deleteAllProduct = async (cid) => {
+      // Valida que exista el carrito
+      const cartProduct = await this.getCartProductById(cid);
+      if (!cartProduct) return { existCart: false }
+      const result = cartProduct.products.length
+
+      // Elimina todos los productos del carrito
+      if (result > 0) {
+         const result = await CartModule.updateOne({ _id: cid }, { $pull: { products: {} } })
+         return result;
+      } else {
+         return { existProduct: false }
+      }
+   }
+
+
+   deleteProductById = async (cid, pid) => {
+      // Valida que exista el carrito y el producto
+      const cartProduct = await this.getCartProductById(cid);
+      if (!cartProduct) return { existCart: false }
+      const result = cartProduct.products.find(e => e.product._id.toString() === pid);
+
+      // Si existe el producto en el carrito lo elimina
+      if (result) {
+         const result = await CartModule.updateOne({ _id: cid }, { $pull: { products: { product: pid } } });
+         return result;
+      } else {
+         return { existProduct: false }
+      }
+   }
+
+   updateProduct = async (cid, products) => {
+      // Valida que exista el carrito y el producto
+      const cartProduct = await this.getCartProductById(cid);
+      if (!cartProduct) return { existCart: false }
+      
+      // Insertar array de productos
+      products.forEach(async (e) => {
+         cartProduct.products.push(e);
+      });
+      cartProduct.updatedAt = Date.now();
+
+      try {
+         const result = await CartModule.updateOne({ _id: cid }, cartProduct);
+         return result;
+
+      } catch (error) {
+         console.log(error);
+      }
+   }
+
+   updateProductQuantity = async (cid, pid, quantity) => {
+      // Valida que exista el carrito y el producto
+      const cartProduct = await this.getCartProductById(cid);
+      if (!cartProduct) return { existCart: false }
+      const result = cartProduct.products.find(e => e.product._id.toString() === pid);
+
+      if (result) {
+         const result = await CartModel.updateOne({ _id: cid, "products.product": pid }, { $set: { "products.$.quantity": quantity } });
+         console.log(result);
+         return result;
+      } else {
+         return { existProduct: false }
       }
    }
 }

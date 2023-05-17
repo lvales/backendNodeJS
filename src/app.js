@@ -41,7 +41,7 @@ app.set('view engine', 'handlebars');
 
 // Rutas
 app.use("/api/products", productsRouter);
-app.use("/api/cart", cartsRouter);
+app.use("/api/carts", cartsRouter);
 app.use('/', viewRouter);
 
 // Websocket
@@ -49,13 +49,13 @@ io.on('connection', async socket => {
   console.log('Cliente conectado: ' + socket.id);
 
   // Obtiene productos y emite al cliente
-  const products = await productDao.getProducts();
+  const products = await productDao.getProducts(10, 1, null, 'desc');
   socket.emit('client_getAllProduct', products);
 
   // Agrega producto y emite a todos los clientes
   socket.on('server_addProduct', async data => {
     await productDao.addProduct(data);
-    const products = await productDao.getProducts();
+    const products = await productDao.getProducts(10, 1, null, 'desc');
     io.emit('client_getAllProduct', products);
     socket.emit('alert', { type: 'success', msg: 'Producto agregado correctamente', color: 'YellowGreen' });
     socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });
@@ -68,7 +68,7 @@ io.on('connection', async socket => {
     if (result.deletedCount === 0) {
       socket.emit('alert', { type: 'error', msg: 'Producto no encontrado', color: 'Crimson' });
     } else {
-      const products = await productDao.getProducts();
+      const products = await productDao.getProducts(10, 1, null, 'desc');
       io.emit('client_getAllProduct', products);
       socket.emit('alert', { type: 'success', msg: 'Producto eliminado correctamente', color: 'DarkOrange' });
       socket.broadcast.emit('alert', { type: 'success', msg: 'Los productos disponibles han sido actualizados', color: 'DodgerBlue' });

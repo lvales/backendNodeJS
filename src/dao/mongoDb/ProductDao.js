@@ -5,8 +5,11 @@ export default class ProductDao {
    // Metodos
    getProducts = async (limit, page, query, sort) => {
 
+      const param = {};
+      query ? param.category = query : null;
+
       try {
-         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate({query}, { limit, page, sort: { price: sort }, lean: true });
+         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate(param, { limit, page, sort: { price: sort }, lean: true });
          const products = docs;
          if (products.length === 0) return { exists: false };
          return {

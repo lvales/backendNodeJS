@@ -4,8 +4,9 @@ export default class ProductDao {
 
    // Metodos
    getProducts = async (limit, page, query, sort) => {
+
       try {
-         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate(query, { limit, page, sort: { price: sort }, lean: true });
+         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate({query}, { limit, page, sort: { price: sort }, lean: true });
          const products = docs;
          if (products.length === 0) return { exists: false };
          return {
@@ -16,8 +17,6 @@ export default class ProductDao {
             page,
             hasPrevPage,
             hasNextPage,
-            //  prevLink, 
-            //  nextLink
          }
       } catch (error) {
          console.log(error);

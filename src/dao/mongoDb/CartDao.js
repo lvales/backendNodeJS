@@ -22,6 +22,7 @@ export default class CartDao {
          return result;
       } catch (error) {
          console.log(error);
+         return { exists: false };
       }
    }
 
@@ -34,6 +35,7 @@ export default class CartDao {
          return result;
       } catch (error) {
          console.log(error);
+         return { status: false };
       }
    };
 

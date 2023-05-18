@@ -44,6 +44,12 @@ router.get('/products', async (req, res) => {
 router.get('/carts/:cid', async (req, res) => {
   const cart = await cartDao.getCartProductById(req.params.cid);
   const products = cart.products;
+  if (cart.exists === false) {
+    return res.status(404).send({
+      status: 'ERROR',
+      msg: `El carrito con id ${req.params.cid} no existe`
+    });
+  }
   res.render('cartId', { products });
 });
 

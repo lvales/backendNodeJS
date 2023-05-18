@@ -38,7 +38,13 @@ router.get('/:cid', async (req, res) => {
 // Crear carrito
 router.post('/', async (req, res) => {
    const cart = await dao.createCart();
-
+   
+   if (cart.status === false) {
+      return res.status(400).send({
+         status: 'ERROR',
+         msg: 'No se pudo crear el carrito'
+      });
+   }
    res.send({
       status:'success',
       cart

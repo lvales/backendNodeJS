@@ -2,16 +2,18 @@
 window.onload = function () {
 
    const addToCart = document.getElementsByName('addToCart');
-   const idProduct = document.getElementById('idProduct');
+   // const idProduct = document.getElementsByName('idProduct');
    const viewCart = document.getElementById('viewCart');
 
    let cartId = sessionStorage.getItem('cartId');
+   let productId = '';
    let url = '';
 
-   addToCart.forEach(element => {
+   
+   addToCart.forEach((element, i) => {
       element.addEventListener('click', (e) => {
          e.preventDefault();
-         console.log('click');
+         productId = document.getElementsByName('addToCart')[i].id;
          cartId ? addProductToCart(cartId) : getCartId();
       }, false);
    });
@@ -33,9 +35,10 @@ window.onload = function () {
          })
    }
 
+   
    async function addProductToCart(cartId) {
       console.log('addProductToCart');
-      url = `/api/carts/${cartId}/product/${idProduct.value.toString()}`;
+      url = `/api/carts/${cartId}/product/${productId.toString()}`;
       await fetch(url, {
          method: 'POST',
       }

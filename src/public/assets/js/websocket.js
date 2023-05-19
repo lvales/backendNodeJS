@@ -1,3 +1,5 @@
+window.onload = function() {
+
 const socket = io();
 
 const productForm = document.querySelector('#productForm');
@@ -60,3 +62,4 @@ del.addEventListener('click', function () {
   socket.emit('server_delProduct', idRemove.value);
   delForm.reset();
 });
+}

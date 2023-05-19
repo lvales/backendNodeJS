@@ -1,3 +1,4 @@
+window.onload = function() {
 // Chat 
 const socket = io();
 const body = document.getElementById('body');
@@ -63,3 +64,4 @@ socket.on('chat', (data) => {
       }
    });
 });
+}

@@ -45,11 +45,7 @@ export default class ProductDao {
       }
       // Valida que no exista un producto con el mismo codigo
       let isDuplicate = await ProductModule.find({ code: code });
-      if (isDuplicate.length > 0) {
-         return {
-            duplicate: true
-         }
-      }
+      if (isDuplicate.length > 0) return { duplicate: true }
 
       const newProduct = {
          title,
@@ -73,11 +69,7 @@ export default class ProductDao {
    updateProduct = async (pid, product) => {
       // Valida que no exista un producto con el mismo codigo
       let isDuplicateCode = await ProductModule.find({ code: product.code });
-      if (isDuplicateCode.length > 0) {
-         return {
-            duplicate: true
-         }
-      }
+      if (isDuplicateCode.length > 0) return { duplicate: true }
       // Actualiza el producto
       const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
 

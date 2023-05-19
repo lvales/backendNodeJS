@@ -9,7 +9,7 @@ window.onload = function () {
    let productId = '';
    let url = '';
 
-   
+   // Recorre todos los botones de agregar al carrito y les agrega un evento
    addToCart.forEach((element, i) => {
       element.addEventListener('click', (e) => {
          e.preventDefault();
@@ -18,12 +18,14 @@ window.onload = function () {
       }, false);
    });
 
+   // Agrega un evento al botón de ver carrito
    viewCart.addEventListener('click', (e) => {
       e.preventDefault();
       const url = `/carts/${cartId}`;
       window.location.href = url;
    });
 
+   // Crea el cartId y lo guarda en sessionStorage para usarlo en el carrito
    async function getCartId() {
       await fetch('/api/carts', {
          method: 'POST',
@@ -35,9 +37,8 @@ window.onload = function () {
          })
    }
 
-   
+   // Agrega el producto al carrito con el cartId y productId   
    async function addProductToCart(cartId) {
-      console.log('addProductToCart');
       url = `/api/carts/${cartId}/product/${productId.toString()}`;
       await fetch(url, {
          method: 'POST',

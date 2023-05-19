@@ -6,6 +6,7 @@ const productDao = new ProductDao();
 
 export default class CartDao {
    // Métodos
+   // Obtener todos los carritos
    getCartProducts = async () => {
       try {
          const result = await CartModule.find().lean().populate('products.product').lean();
@@ -16,6 +17,7 @@ export default class CartDao {
       }
    }
 
+   // Obtener un carrito por id
    getCartProductById = async (cid) => {
       try {
          const result = await CartModule.findOne({ _id: cid }).populate('products.product').lean();
@@ -26,6 +28,7 @@ export default class CartDao {
       }
    }
 
+   // Crear un carrito
    createCart = async () => {
       const cartProduct = {
          "products": []
@@ -39,14 +42,14 @@ export default class CartDao {
       }
    };
 
-
+   // Agregar un producto al carrito
    addProductCart = async (cid, pid) => {
       // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);
       const existProduct = await productDao.getProductById(pid);
       if (!cartProduct) return { existCart: false }
       if (!existProduct) return { existProduct: false }
-      // console.log(cartProduct.products[0].product._id.toString());
+
       const result = cartProduct.products.find(e => e.product._id.toString() === pid);
 
       // Si no existe el producto en el carrito, lo agrega
@@ -71,7 +74,7 @@ export default class CartDao {
       }
    }
 
-
+   // Eliminar todos los productos del carrito
    deleteAllProduct = async (cid) => {
       // Valida que exista el carrito
       const cartProduct = await this.getCartProductById(cid);
@@ -87,7 +90,7 @@ export default class CartDao {
       }
    }
 
-
+   // Eliminar un producto del carrito por id
    deleteProductById = async (cid, pid) => {
       // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);
@@ -103,11 +106,12 @@ export default class CartDao {
       }
    }
 
+   // Actualizar un producto del carrito por id
    updateProduct = async (cid, products) => {
       // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);
       if (!cartProduct) return { existCart: false }
-      
+
       // Insertar array de productos
       products.forEach(async (e) => {
          cartProduct.products.push(e);
@@ -123,6 +127,7 @@ export default class CartDao {
       }
    }
 
+   // Actualizar la cantidad de un producto del carrito por id
    updateProductQuantity = async (cid, pid, quantity) => {
       // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);

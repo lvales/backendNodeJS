@@ -2,7 +2,6 @@
 window.onload = function () {
 
    const addToCart = document.getElementsByName('addToCart');
-   // const idProduct = document.getElementsByName('idProduct');
    const viewCart = document.getElementById('viewCart');
 
    let cartId = sessionStorage.getItem('cartId');

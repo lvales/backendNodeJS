@@ -4,29 +4,35 @@
          <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-7 col-lg-5 col-xl-5">
                <h1 class="py-2">Reistro de usuario</h1>
-               <form id="registerForm">
+               <form id="formRegister">
                   <!-- Name input -->
                   <div class="form-outline mb-4">
-                     <input type="text" id="name" class="form-control form-control-lg"
-                        placeholder="Nombre" />
+                     <input type="text" name="first_name" class="form-control form-control-lg" placeholder="Nombre" />
                   </div>
 
                   <!-- Last Name input -->
                   <div class="form-outline mb-4">
-                     <input type="text" id="lastName" class="form-control form-control-lg"
-                        placeholder="Apellido" />
+                     <input type="text" name="last_name" class="form-control form-control-lg" placeholder="Apellido" />
                   </div>
 
                   <!-- email input -->
                   <div class="form-outline mb-4">
-                     <input type="email" id="email" class="form-control form-control-lg"
-                        placeholder="email" />
+                     <input type="email" name="email" class="form-control form-control-lg" placeholder="email" />
                   </div>
 
                   <!-- ege input -->
                   <div class="form-outline mb-4">
-                     <input type="number" id="lastName" class="form-control form-control-lg"
-                        placeholder="Edad" />
+                     <input type="number" name="age" class="form-control form-control-lg" placeholder="Edad" />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                     <input type="password" name="password" class="form-control form-control-lg"
+                        placeholder="Contraseña" />
+                  </div>
+
+                  <div class="mb-3 form-check">
+                     <input class="form-check-input" type="checkbox" value="admin" name="admin" />
+                     <label class="form-check-label" for="admin"> Administrador * solo con fin educativo *</label>
                   </div>
 
                   <!-- Submit button -->
@@ -34,9 +40,11 @@
                      <button type="submit" class="btn btn-primary btn-lg btn-block">Registrarme</button>
                   </div>
                </form>
-               <p class="text-center py-3">¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p>
+               <p class="text-center py-3">¿Ya tienes una cuenta? <a href="/">Ingresa aquí</a></p>
             </div>
          </div>
       </div>
    </section>
 </div>
+
+<script src="/assets/js/register.js"></script>

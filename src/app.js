@@ -1,8 +1,10 @@
 import express from "express";
+import session from "express-session";
 import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo'
 import { Server } from "socket.io";
-import handelbars from "express-handlebars";
 import __dirname from "./utils.js";
+import handelbars from "express-handlebars";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
@@ -34,6 +36,16 @@ const io = new Server(server);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
+
+app.use(session({
+  store: new MongoStore({
+    mongoUrl: MONGO,
+    ttl:3600,
+  }),
+  secret:'SecretWord',
+  resave:false,
+  saveUninitialized:false
+}))
 
 // Vistas
 app.engine('handlebars', handelbars.engine());

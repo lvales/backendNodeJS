@@ -13,6 +13,27 @@ router.get("/", async (req, res) => {
   const  query  = req.query.query ;
   const sort = req.query.sort;
 
+  if (limit < 1 || page < 1) {
+    return res.status(400).send({
+      status: 'ERROR',
+      msg: 'Limit y page deben ser mayores a 0'
+    });
+  }
+
+  if ( isNaN(limit) || isNaN(page) ) {
+    return res.status(400).send({
+      status: 'ERROR',
+      msg: 'Limit y page deben ser numeros'
+    });
+  }
+
+  if (query && typeof query !== 'string') {
+    return res.status(400).send({
+      status: 'ERROR',
+      msg: 'Query debe ser un string'
+    });
+  }
+
   const result = await dao.getProducts(limit, page, query, sort);
 
   if (result.exists === false) {

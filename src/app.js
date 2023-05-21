@@ -6,6 +6,7 @@ import __dirname from "./utils.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewRouter from "./routes/view.routes.js"
+import sessionRouter from "./routes/session.router.js"
 import ProductDao from "./dao/mongoDb/ProductDao.js";
 import MessageDao from "./dao/mongoDb/MessageDao.js";
 
@@ -40,9 +41,10 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars');
 
 // Rutas
-app.use("/api/products", productsRouter);
-app.use("/api/carts", cartsRouter);
 app.use('/', viewRouter);
+app.use("/api/carts", cartsRouter);
+app.use("/api/products", productsRouter);
+app.use('/api/session', sessionRouter);
 
 // Websocket
 io.on('connection', async socket => {

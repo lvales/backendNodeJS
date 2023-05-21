@@ -99,8 +99,8 @@ router.put('/:cid', async (req,res) => {
 router.put('/:cid/product/:pid', async (req,res) => {
    const idCart = req.params.cid;
    const idProduct = req.params.pid;
-   const quantity = req.query.quantity;
-
+   const quantity = req.body.quantity;
+   
    const result = await dao.updateProductQuantity(idCart, idProduct, quantity);
    return res.send({
       status: 'success',

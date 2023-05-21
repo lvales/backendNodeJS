@@ -7,22 +7,30 @@ const productDao = new ProductDao();
 const cartDao = new CartDao();
 
 // View routes
-// Home 
+// Home logi
 router.get('/', async (req, res) => {
-  const productos = await productDao.getProducts();
-  res.render('home', {
-    productos
+  res.render('login', {
+
   });
 });
 
-// Route para agregar producto
-router.get('/realtimeproducts', (req, res) => {
-  res.render('realTimeProducts', {});
+// Register
+router.get('/register', async (req, res) => {
+  res.render('register', {
+
+  });
 });
 
-// Route chat
-router.get('/chat', (req, res) => {
-  res.render('chat', {});
+// Profile
+router.get('/profile', async (req, res) => {
+  res.render('profile', {
+
+  });
+});
+
+// Route para agregar y eliminar productos
+router.get('/realtimeproducts', (req, res) => {
+  res.render('realTimeProducts', {});
 });
 
 // Route para vizualizar productos 
@@ -51,6 +59,12 @@ router.get('/carts/:cid', async (req, res) => {
     });
   }
   res.render('cartId', { products });
+});
+
+
+// Route chat
+router.get('/chat', (req, res) => {
+  res.render('chat', {});
 });
 
 export default router;

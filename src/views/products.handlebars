@@ -6,9 +6,11 @@
                <div class="d-flex justify-content-between align-items-center">
                   <h1 class="py-2">Productos</h1>
                   <div class="d-flex align-items-center">
-                     <img src="https://robohash.org/https://robohash.org/{{ user.first_name }}"
-                        class="rounded-circle img-fluid" style="width: 50px;" />
-                     <div>Hola {{ user.first_name }}</div>
+                     <div class="rounded-circle bg-warning">
+                        <img src="https://robohash.org/https://robohash.org/{{ user.first_name }}"
+                           class="rounded-circle img-fluid" style="width: 40px;" />
+                     </div>
+                     <div class="px-2">Hola {{ user.first_name }}</div>
                      <div>
                         <a href="/profile"><button class="btn btn-primary btn-sm px-3 mx-3">Perfil</button></a>
                         <a href="/api/session/logout"><button class="btn btn-danger btn-sm px-3">Salir</button></a>

@@ -33,6 +33,11 @@ router.get('/register', publicAccess, async (req, res) => {
   res.render('register');
 });
 
+// Reset password
+router.get('/resetPassword', publicAccess, async (req, res) => {
+  res.render('resetPassword');
+});
+
 // Profile
 router.get('/profile', privateAccess, async (req, res) => {
   res.render('profile', {

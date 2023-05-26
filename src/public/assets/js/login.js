@@ -12,11 +12,19 @@ form.addEventListener('submit', e => {
    fetch('/api/session/login', {
       method: 'POST',
       body: JSON.stringify(obj),
-      headers:{
+      headers: {
          'Content-Type': 'application/json'
       }
    }).then(result => {
-      if(result.status == 200){
+      if (result.status !== 200) {
+         Toastify({
+            text: 'Datos incorrectos',
+            className: 'error',
+            style: {
+               background: 'red',
+            }
+         }).showToast()
+      } else {
          window.location.replace('/products')
       }
    })

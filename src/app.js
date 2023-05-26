@@ -1,16 +1,19 @@
 import express from "express";
-import session from "express-session";
 import mongoose from 'mongoose';
-import MongoStore from 'connect-mongo'
+import passport from "passport";
 import { Server } from "socket.io";
-import __dirname from "./utils.js";
+import session from "express-session";
+import MongoStore from 'connect-mongo'
 import handelbars from "express-handlebars";
-import productsRouter from "./routes/products.router.js";
-import cartsRouter from "./routes/carts.router.js"
+
+import __dirname from "./utils.js";
 import viewRouter from "./routes/view.routes.js"
-import sessionRouter from "./routes/session.router.js"
+import cartsRouter from "./routes/carts.router.js"
 import ProductDao from "./dao/mongoDb/ProductDao.js";
 import MessageDao from "./dao/mongoDb/MessageDao.js";
+import sessionRouter from "./routes/session.router.js"
+import productsRouter from "./routes/products.router.js";
+import initializePassport from "./config/passport.config.js";
 
 //  Array de mensajes del chat
 const messageChat = [];
@@ -46,6 +49,11 @@ app.use(session({
   resave:false,
   saveUninitialized:false
 }))
+
+// Passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Vistas
 app.engine('handlebars', handelbars.engine());

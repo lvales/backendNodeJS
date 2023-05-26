@@ -9,9 +9,9 @@ const dao = new ProductDao();
 // Ruta obtener todos los productos
 router.get("/", async (req, res) => {
   const limit = req.query.limit || 10;
-  const page = req.query.page || 1;
-  const  query  = req.query.query ;
-  const sort = req.query.sort;
+  const page  = req.query.page || 1;
+  const query = req.query.query || '' ;
+  const sort  = req.query.sort || 'desc';
 
   if (limit < 1 || page < 1) {
     return res.status(400).send({

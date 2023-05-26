@@ -47,9 +47,14 @@ router.get('/realtimeproducts', adminAcces, (req, res) => {
 
 // Route para vizualizar productos 
 router.get('/products', privateAccess, async (req, res) => {
-  const page = req.query.page || 1;
-  const { products, prevPage, nextPage, hasPrevPage, hasNextPage } = await productDao.getProducts(3, page, '', 'asc');
+  const limit  = req.query.limit || 3;
+  const  query = req.query.query || '';
+  const sort   = req.query.sort || 'desc';
+  const page   = req.query.page || 1;
+
+  const { products, prevPage, nextPage, hasPrevPage, hasNextPage } = await productDao.getProducts(limit, page, query, sort);
   const actualPage = parseInt(nextPage) - 1 || parseInt(prevPage) + 1;
+
   res.render('products', {
     products,
     actualPage,
@@ -73,7 +78,6 @@ router.get('/carts/:cid', privateAccess, async (req, res) => {
   }
   res.render('cartId', { products });
 });
-
 
 // Route chat
 router.get('/chat', privateAccess, (req, res) => {

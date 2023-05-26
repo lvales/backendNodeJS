@@ -1,5 +1,5 @@
 import CartModel from './models/cart.model.js';
-import CartModule from './models/cart.model.js';
+// import CartModule from './models/cart.model.js';
 import ProductDao from './ProductDao.js';
 
 const productDao = new ProductDao();
@@ -9,7 +9,7 @@ export default class CartDao {
    // Obtener todos los carritos
    getCartProducts = async () => {
       try {
-         const result = await CartModule.find().lean().populate('products.product').lean();
+         const result = await CartModel.find().lean().populate('products.product').lean();
          if (result.length === 0) return { exists: false };
          return result;
       } catch (error) {
@@ -20,7 +20,7 @@ export default class CartDao {
    // Obtener un carrito por id
    getCartProductById = async (cid) => {
       try {
-         const result = await CartModule.findOne({ _id: cid }).populate('products.product').lean();
+         const result = await CartModel.findOne({ _id: cid }).populate('products.product').lean();
          return result;
       } catch (error) {
          console.log(error);
@@ -34,7 +34,7 @@ export default class CartDao {
          "products": []
       }
       try {
-         const result = await CartModule.create(cartProduct);
+         const result = await CartModel.create(cartProduct);
          return result;
       } catch (error) {
          console.log(error);
@@ -66,7 +66,7 @@ export default class CartDao {
       cartProduct.updatedAt = Date.now();
 
       try {
-         const result = await CartModule.updateOne({ _id: cid }, cartProduct);
+         const result = await CartModel.updateOne({ _id: cid }, cartProduct);
          return result;
 
       } catch (error) {
@@ -83,7 +83,7 @@ export default class CartDao {
 
       // Elimina todos los productos del carrito
       if (result > 0) {
-         const result = await CartModule.updateOne({ _id: cid }, { $pull: { products: {} } })
+         const result = await CartModel.updateOne({ _id: cid }, { $pull: { products: {} } })
          return result;
       } else {
          return { existProduct: false }
@@ -99,7 +99,7 @@ export default class CartDao {
 
       // Si existe el producto en el carrito lo elimina
       if (result) {
-         const result = await CartModule.updateOne({ _id: cid }, { $pull: { products: { product: pid } } });
+         const result = await CartModel.updateOne({ _id: cid }, { $pull: { products: { product: pid } } });
          return result;
       } else {
          return { existProduct: false }
@@ -119,7 +119,7 @@ export default class CartDao {
       cartProduct.updatedAt = Date.now();
 
       try {
-         const result = await CartModule.updateOne({ _id: cid }, cartProduct);
+         const result = await CartModel.updateOne({ _id: cid }, cartProduct);
          return result;
 
       } catch (error) {

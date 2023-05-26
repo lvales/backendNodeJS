@@ -7,7 +7,7 @@
                   <h1 class="py-2">Productos</h1>
                   <div class="d-flex align-items-center">
                      <div class="rounded-circle bg-warning">
-                        <img src="https://robohash.org/https://robohash.org/{{ user.first_name }}"
+                        <img src="https://robohash.org/{{ user.first_name }}"
                            class="rounded-circle img-fluid" style="width: 40px;" />
                      </div>
                      <div class="px-2">Hola {{ user.first_name }}</div>
@@ -20,19 +20,21 @@
                      </div>
                   </div>
                </div>
-               {{#each products}}
-               <div class="card m-2" style="width: 18rem;" id="{{this._id}}">
-                  <img class="card-img-top" src="{{this.thumbnail}}" alt="Card image cap">
-                  <div class="card-body">
-                     <h5 class="card-title">{{this.title}}</h5>
-                     <h6 class="card-subtitle mb-2 text-muted">Codigo: {{this.code}}</h6>
-                     <h6 class="card-subtitle mb-2 text-muted">Precio: {{this.price}} </h6>
-                     <p class="card-text">{{this.description}}</p>
-                     <p class="card-text">Stock: {{this.stock}}</p>
-                     <button id="{{this._id}}" name="addToCart" class="btn btn-success">Agregar al carrito</button>
+               <div class="row mt-5 justify-content-center">
+                  {{#each products}}
+                  <div class="card m-2" style="width: 18rem;" id="{{this._id}}">
+                     <img class="card-img-top" src="{{this.thumbnail}}" alt="Card image cap">
+                     <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Codigo: {{this.code}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Precio: {{this.price}} </h6>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text">Stock: {{this.stock}}</p>
+                        <button id="{{this._id}}" name="addToCart" class="btn btn-success">Agregar al carrito</button>
+                     </div>
                   </div>
+                  {{/each}}
                </div>
-               {{/each}}
             </div>
             <div class="text-center">
                <div class="card-subtitle mb-2 text-muted">Página: {{ actualPage }}</div>

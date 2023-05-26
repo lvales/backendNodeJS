@@ -136,7 +136,6 @@ export default class CartDao {
 
       if (result) {
          const result = await CartModel.updateOne({ _id: cid, "products.product": pid }, { $set: { "products.$.quantity": quantity } });
-         console.log(result);
          return result;
       } else {
          return { existProduct: false }

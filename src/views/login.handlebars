@@ -7,8 +7,7 @@
                <form id="formLogin">
                   <!-- Email input -->
                   <div class="form-outline mb-4">
-                     <input type="email" name="email" class="form-control form-control-lg"
-                        placeholder="email" />
+                     <input type="email" name="email" class="form-control form-control-lg" placeholder="email" />
                   </div>
 
                   <!-- Password input -->
@@ -29,23 +28,25 @@
                   <!-- Submit button -->
                   <div class="row px-3">
                      <button type="submit" class="btn btn-primary btn-lg btn-block">Iniciar sesión</button>
-                  <div class="divider d-flex align-items-center my-4">
-                     <p class="text-center fw-bold mx-3 mb-0 text-muted">O</p>
-                  </div>
+                     <a class="btn btn-dark btn-lg btn-block mt-3" href="/api/session/github"
+                        role="button">
+                        <i class="fab fa-github me-2"></i>Continuar con GitHub
+                     </a>
 
-                  <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="/register" role="button">
-                     Registrarme
-                  </a>
+                     <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0 text-muted">O</p>
+                     </div>
+
+                     <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="/register"
+                        role="button">
+                        Registrarme
+                     </a>
                   </div>
 
                   {{!-- Posible login desde las redes --}}
-                  {{!-- <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
-                     role="button">
-                     <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
-                  </a> --}}
                   {{!-- <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
                      role="button">
-                     <i class="fab fa-twitter me-2"></i>Continue with Twitter</a> --}}   
+                     <i class="fab fa-twitter me-2"></i>Continue with Twitter</a> --}}
                </form>
             </div>
          </div>

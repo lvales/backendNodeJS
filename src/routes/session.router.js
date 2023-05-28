@@ -57,5 +57,12 @@ router.post('/resetPassword', async (req, res) => {
    res.send({status:"success", msg:"Contraseña actuañizada"})
 });
 
+// Login con GitHub
+router.get('/github', passport.authenticate('github', {scope:['user:email']}), async (req,res)=>{})
+
+router.get('/githubcallback', passport.authenticate('github',{failureRedirect:'/'}), async (req,res)=>{
+    req.session.user = req.user;
+    res.redirect('/products')
+})
 
 export default router;

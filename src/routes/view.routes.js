@@ -18,7 +18,7 @@ const privateAccess = (req, res, next) => {
 }
 
 const adminAcces = (req, res, next) => {
-  if (req.session.user.rol !== 'admin') return res.redirect('/');
+  if (req.session.user.rol !== 'admin') return res.redirect('/products');
   next();
 }
 

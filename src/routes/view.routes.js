@@ -6,51 +6,47 @@ const router = Router();
 const productDao = new ProductDao();
 const cartDao = new CartDao();
 
-// Middelwares
+ // Middlewares
+// Verifica si el usuario no ha iniciado sesión
 const publicAccess = (req, res, next) => {
   if (req.session.user) return res.redirect('/products');
   next();
-}
-
+};
+ // Verifica si el usuario ha iniciado sesión
 const privateAccess = (req, res, next) => {
   if (!req.session.user) return res.redirect('/');
   next();
-}
-
-const adminAcces = (req, res, next) => {
+};
+ // Verifica si el usuario tiene acceso de administrador
+const adminAccess = (req, res, next) => {
   if (req.session.user.rol !== 'admin') return res.redirect('/products');
   next();
-}
+};
 
-// View routes
-// Home login
+ // Rutas de vista
+// Página de inicio de sesión
 router.get('/', publicAccess, async (req, res) => {
   res.render('login');
 });
-
-// Register
+ // Página de registro
 router.get('/register', publicAccess, async (req, res) => {
   res.render('register');
 });
-
-// Reset password
+ // Página para restablecer contraseña
 router.get('/resetPassword', publicAccess, async (req, res) => {
   res.render('resetPassword');
 });
-
-// Profile
+ // Página de perfil
 router.get('/profile', privateAccess, async (req, res) => {
   res.render('profile', {
     user: req.session.user
   });
 });
-
-// Route para agregar y eliminar productos
-router.get('/realtimeproducts', adminAcces, (req, res) => {
+ // Ruta para agregar y eliminar productos
+router.get('/realtimeproducts', adminAccess, (req, res) => {
   res.render('realTimeProducts', {});
 });
-
-// Route para vizualizar productos 
+ // Ruta para ver productos
 router.get('/products', privateAccess, async (req, res) => {
   const limit  = req.query.limit || 3;
   const  query = req.query.query || '';
@@ -70,9 +66,8 @@ router.get('/products', privateAccess, async (req, res) => {
     user: req.session.user
   });
 });
-
-// Route para vizualizar carrito
-router.get('/carts/:cid', privateAccess, async (req, res) => {
+ // Ruta para ver carrito
+router.get('/carts/:cid', async (req, res) => {
   const cart = await cartDao.getCartProductById(req.params.cid);
   const products = cart.products;
   if (cart.exists === false) {
@@ -83,8 +78,7 @@ router.get('/carts/:cid', privateAccess, async (req, res) => {
   }
   res.render('cartId', { products });
 });
-
-// Route chat
+ // Ruta de chat
 router.get('/chat', privateAccess, (req, res) => {
   res.render('chat', {});
 });

@@ -9,11 +9,12 @@ export default class CartDao {
    // Obtener todos los carritos
    getCartProducts = async () => {
       try {
-         const result = await CartModel.find().lean().populate('products.product').lean();
+         const result = await CartModel.find().populate('products.product').lean();
          if (result.length === 0) return { exists: false };
          return result;
       } catch (error) {
-         console.log(error);
+         console.error('Error al obtener el carrito:', error);
+         throw error;
       }
    }
 
@@ -21,9 +22,10 @@ export default class CartDao {
    getCartProductById = async (cid) => {
       try {
          const result = await CartModel.findOne({ _id: cid }).populate('products.product').lean();
+         if (result === null) return { exists: false };
          return result;
       } catch (error) {
-         console.log(error);
+         console.error('Error al obtener el carrito:', error);
          return { exists: false };
       }
    }

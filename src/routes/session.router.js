@@ -25,9 +25,10 @@ router.post('/login', passport.authenticate('login', {failureRedirect: '/faillog
       last_name: req.user.last_name,
       email: req.user.email,
       age: req.user.age,
-      rol: req.user.rol || null
+      cartId: req.user.cartId,
+      rol: req.user.rol
    }
-
+   
    res.send({ status: "success", payload: req.user, message: "Usuario logueado" })
 });
 

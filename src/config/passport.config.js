@@ -1,8 +1,11 @@
 import passport from "passport";
 import local from "passport-local";
 import GitHubStrategy from 'passport-github2'
-import userModel from "../dao/mongoDb/models/user.model.js";
+import UserModel from "../dao/mongoDb/models/user.model.js";
 import { createHash, validatePassword } from "../utils.js";
+import CartDao from "../dao/mongoDb/CartDao.js";
+
+const cartDao = new CartDao;
 
 const LocalStrategy = local.Strategy;
 
@@ -15,7 +18,7 @@ const initializePassport = () => {
          const { first_name, last_name, email, age, rol } = req.body;
 
          try {
-            const user = await userModel.findOne({ email: userName });
+            const user = await UserModel.findOne({ email: userName });
 
             if (user) {
                console.log('El usuario existe');
@@ -30,7 +33,7 @@ const initializePassport = () => {
                rol: rol || "user"
             }
 
-            const result = await userModel.create(newUser);
+            const result = await UserModel.create(newUser);
             return done(null, result);
 
          } catch (error) {
@@ -43,7 +46,9 @@ const initializePassport = () => {
    passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
 
       try {
-         const user = await userModel.findOne({ email: username });
+         const user = await UserModel.findOne({ email: username });
+         const existCart = await cartDao.getCartProductById(user.cartId.toString());
+         const uid = user._id;
 
          if (!user) {
             console.log('No existe el usuario');
@@ -51,10 +56,19 @@ const initializePassport = () => {
          }
 
          if (!validatePassword(password, user)) return done(null, false);
+
+         if (existCart.exists === false) {
+            // Se crea un carrito para el usuario y se actualiza el ID del carrito en la información del usuario.  
+            // Luego se actualiza la información del usuario en la base de datos. 
+            const cart = await cartDao.createCart();
+            user.cartId = cart._id;
+            const result = await UserModel.updateOne({ _id: uid }, { $set: user });
+         }
+
          return done(null, user);
 
       } catch (error) {
-         return done('Error al registrar el usuario' + error);
+         return done('Error al loguear el usuario' + error);
       }
    }));
 
@@ -63,7 +77,7 @@ const initializePassport = () => {
    });
 
    passport.deserializeUser(async (id, done) => {
-      const user = await userModel.findById(id);
+      const user = await UserModel.findById(id);
       done(null, user);
    });
 
@@ -75,7 +89,7 @@ const initializePassport = () => {
    }, async (accessTokn, refreshToken, profile, done) => {
       try {
          // console.log(profile); //Para ver la info que viene de github
-         const user = await userModel.findOne({ email: profile._json.email });
+         const user = await UserModel.findOne({ email: profile._json.email });
 
          if (!user) {
             // const email = profile._json.email == null ? profile._json.username : null;
@@ -86,7 +100,7 @@ const initializePassport = () => {
                age: 18,
                password: '',
             }
-            const result = await userModel.create(newUser);
+            const result = await UserModel.create(newUser);
             done(null, result);
          } else {
             done(null, user);

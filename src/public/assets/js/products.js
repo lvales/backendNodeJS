@@ -7,7 +7,7 @@ window.onload = function () {
    let cartId = sessionStorage.getItem('cartId');
    let productId = '';
    let url = '';
-
+   
    // Recorre todos los botones de agregar al carrito y les agrega un evento
    addToCart.forEach((element, i) => {
       element.addEventListener('click', (e) => {
@@ -16,7 +16,7 @@ window.onload = function () {
          cartId ? addProductToCart(cartId) : getCartId();
       }, false);
    });
-
+   
    // Agrega un evento al botón de ver carrito
    viewCart.addEventListener('click', (e) => {
       e.preventDefault();

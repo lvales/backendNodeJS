@@ -14,13 +14,15 @@ form.addEventListener('submit', e => {
       headers: {
          'Content-Type': 'application/json'
       }
-   }).then(result => result.json()).then(json =>
-      Toastify({
-         text: 'Usuario registrado con exito',
-         className: 'success',
-         style: {
-            background: 'YellowGreen',
-         }
-      }).showToast()
-   )
+   }).then(result => result.json()).then(json => {
+      if (result.status === 200) {
+         Toastify({
+            text: 'Usuario registrado con exito',
+            className: 'success',
+            style: {
+               background: 'YellowGreen',
+            }
+         }).showToast()
+      }
+   });
 })

@@ -1,9 +1,11 @@
 import passport from "passport";
 import local from "passport-local";
 import GitHubStrategy from 'passport-github2'
-import UserModel from "../dao/mongoDb/models/user.model.js";
-import { createHash, validatePassword } from "../utils.js";
+
+import { config } from "./config.js"
 import CartDao from "../dao/mongoDb/CartDao.js";
+import { createHash, validatePassword } from "../utils.js";
+import UserModel from "../dao/mongoDb/models/user.model.js";
 
 const cartDao = new CartDao;
 
@@ -83,9 +85,9 @@ const initializePassport = () => {
 
    // Register GitHub
    passport.use('github', new GitHubStrategy({
-      clientID: 'Iv1.9765a82495b3aa0d',
-      clientSecret: '24845e3b2c61129cc20542b5f37f347ae9978bdd',
-      callbackURL: 'http://localhost:8080/api/session/githubcallback',
+      clientID: config.CLIENT_ID,
+      clientSecret: config.CLIENT_SECRET,
+      callbackURL: config.CALLBACK_URL
    }, async (accessTokn, refreshToken, profile, done) => {
       try {
          // console.log(profile); //Para ver la info que viene de github

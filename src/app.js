@@ -7,6 +7,7 @@ import MongoStore from 'connect-mongo'
 import handelbars from "express-handlebars";
 
 import __dirname from "./utils.js";
+import { config } from "./config/config.js"
 import viewRouter from "./routes/view.routes.js"
 import cartsRouter from "./routes/carts.router.js"
 import ProductDao from "./dao/mongoDb/ProductDao.js";
@@ -23,14 +24,14 @@ const productDao = new ProductDao();
 const messageDao = new MessageDao();
 
 // Express
-const PORT = 8080;
+const PORT = config.PORT;
 const app = express();
 const server = app.listen(PORT, () =>
   console.log(`Servidor funcionando en el puerto: ${PORT}`)
 );
 
 // MongoDB
-const MONGO = 'mongodb+srv://lvales:lvales@ecommerce.5m5kksr.mongodb.net/?retryWrites=true&w=majority';
+const MONGO = config.MONGO_URL;
 const conection = mongoose.connect(MONGO);
 
 // Socket.io
@@ -43,11 +44,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(session({
   store: new MongoStore({
     mongoUrl: MONGO,
-    ttl:3600,
+    ttl: 3600,
   }),
-  secret:'SecretWord',
-  resave:false,
-  saveUninitialized:false
+  secret: config.SECRET_WORD,
+  resave: false,
+  saveUninitialized: false
 }))
 
 // Passport

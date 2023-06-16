@@ -49,19 +49,17 @@ const initializePassport = () => {
 
       try {
          const user = await UserModel.findOne({ email: username });
-         const existCart = await cartDao.getCartProductById(user.cartId.toString());
-         const uid = user._id;
-
+         
          if (!user) {
             console.log('No existe el usuario');
             return done(null, false);
          }
-
          if (!validatePassword(password, user)) return done(null, false);
-
-         if (existCart.exists === false) {
+         
+         if(!user.cartId){
             // Se crea un carrito para el usuario y se actualiza el ID del carrito en la información del usuario.  
             // Luego se actualiza la información del usuario en la base de datos. 
+            const uid = user._id;
             const cart = await cartDao.createCart();
             user.cartId = cart._id;
             const result = await UserModel.updateOne({ _id: uid }, { $set: user });
@@ -70,7 +68,7 @@ const initializePassport = () => {
          return done(null, user);
 
       } catch (error) {
-         return done('Error al loguear el usuario' + error);
+         return done('Error al loguear el usuario ' + error);
       }
    }));
 

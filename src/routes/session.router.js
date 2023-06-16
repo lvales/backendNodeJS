@@ -7,7 +7,7 @@ const router = Router();
 
 // Registro de Usuario
 router.post('/register', passport.authenticate('register', {failureRedirect: '/failregister'}), async (req, res) => {
-   res.send({ status: "succes", msg: "Usuario registrado" });
+   res.send({ status: "success", msg: "Usuario registrado" });
 });
 
 router.get('/failregister', async (req,res) => {

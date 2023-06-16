@@ -15,8 +15,7 @@ form.addEventListener('submit', e => {
          'Content-Type': 'application/json'
       }
    }).then(result => result.json()).then(json => {
-      console.log(result.status);
-      if (result.status === 200) {
+      if (json.status === 'success') {
          Toastify({
             text: 'Usuario registrado con exito',
             className: 'success',

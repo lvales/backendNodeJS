@@ -13,6 +13,7 @@ import cartsRouter from "./routes/carts.router.js"
 import ProductDao from "./dao/mongoDb/ProductDao.js";
 import MessageDao from "./dao/mongoDb/MessageDao.js";
 import sessionRouter from "./routes/session.router.js"
+import { ConnectionDB } from "./config/connectionDB.js";
 import productsRouter from "./routes/products.router.js";
 import initializePassport from "./config/passport.config.js";
 
@@ -32,7 +33,7 @@ const server = app.listen(PORT, () =>
 
 // MongoDB
 const MONGO = config.MONGO_URL;
-const conection = mongoose.connect(MONGO);
+const conection = ConnectionDB.getInstance;
 
 // Socket.io
 const io = new Server(server);

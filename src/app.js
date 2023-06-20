@@ -33,7 +33,7 @@ const server = app.listen(PORT, () =>
 
 // MongoDB
 const MONGO = config.MONGO_URL;
-const conection = ConnectionDB.getInstance;
+const connection = ConnectionDB.getInstance();
 
 // Socket.io
 const io = new Server(server);

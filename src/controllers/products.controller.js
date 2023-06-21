@@ -44,8 +44,6 @@ class ProductsController {
   createProduct = async (req, res) => {
     const reqProduct = req.body;
 
-    // console.log(req.file);
-
     if (req.file) {
       const filename = req.file.filename;
       reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];

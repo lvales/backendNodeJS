@@ -39,10 +39,7 @@ export default class ProductDao {
    addProduct = async (product) => {
 
       const { title, description, code, price, stock, category, thumbnail, status } = product;
-      // Valida que no falte ningun campo
-      if (!title || !description || !code || !price || !stock || !category) {
-         return { incomplete: true };
-      }
+
       // Valida que no exista un producto con el mismo codigo
       let isDuplicate = await ProductModule.find({ code: code });
       if (isDuplicate.length > 0) return { duplicate: true }

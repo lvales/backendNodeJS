@@ -1,5 +1,3 @@
-import { response, request } from "express";
-
 import ProductDao from "../dao/mongoDb/ProductDao.js";
 
 const dao = new ProductDao();

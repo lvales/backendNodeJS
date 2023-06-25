@@ -1,6 +1,7 @@
 import { Router } from "express";
 import CartDao from "../dao/mongoDb/CartDao.js";
 import CartsController from "../controllers/carts.controller.js";
+import { ValidateId } from "../middlewares/validate.middleware.js";
 
 const router = Router();
 const dao = new CartDao();
@@ -12,7 +13,7 @@ const cartController = new CartsController;
 router.get('/', cartController.getAllCarts);
 
 // Obtener carrito por id
-router.get('/:cid', cartController.getCartById);
+router.get('/:cid', ValidateId, cartController.getCartById);
 
 // Crear carrito
 router.post('/', cartController.createCart);
@@ -21,7 +22,7 @@ router.post('/', cartController.createCart);
 router.post('/:cid/product/:pid', cartController.addToCart);
 
 // Actualizar productos del carrito
-router.put('/:cid', cartController.updateCart);
+router.put('/:cid', ValidateId, cartController.updateCart);
 
 // Actualizar cantidad de un producto del carrito 
 router.put('/:cid/product/:pid', cartController.quantityProductCart);
@@ -30,7 +31,7 @@ router.put('/:cid/product/:pid', cartController.quantityProductCart);
 router.delete('/:cid/product/:pid', cartController.deleteProductCart);
 
 // Eliminar todos los productos de un carrito
-router.delete('/:cid', cartController.deleteAllProductCart);
+router.delete('/:cid',ValidateId, cartController.deleteAllProductCart);
 
 
 export default router;

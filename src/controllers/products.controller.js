@@ -25,7 +25,7 @@ class ProductsController {
   };
 
   getProductsById = async (req, res) => {
-    const pid = req.params.id;
+    const pid = req.params.pid;
     const product = await dao.getProductById(pid);
 
     if (product.exists === false) {
@@ -67,7 +67,7 @@ class ProductsController {
 
   updateProduct = async (req, res) => {
     const reqProduct = req.body;
-    const pid = req.params.id;
+    const pid = req.params.pid;
   
     const updateProduct = await dao.updateProduct(pid, reqProduct);
   
@@ -92,7 +92,7 @@ class ProductsController {
   }
 
   deleteProduct = async (req, res) => {
-    const pid = req.params.id;
+    const pid = req.params.pid;
     const deleteProduct = await dao.deleteProduct(pid);
   
     if (deleteProduct.deletedCount === 0) {

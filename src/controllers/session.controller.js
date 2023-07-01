@@ -1,4 +1,4 @@
-import userModel from '../dao/mongoDb/models/user.model.js';
+import userModel from '../dao/models/user.model.js';
 import { createHash } from '../utils.js';
 
 class SessionController {

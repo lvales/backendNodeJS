@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import ViewController from "../controllers/view.controller.js";
 import { publicAccess, privateAccess, adminAccess, userAccess } from "../middlewares/access.middleware.js";
 

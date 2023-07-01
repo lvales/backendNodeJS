@@ -1,4 +1,4 @@
-import MessageModule from './models/message.model.js ';
+import MessageModule from '../models/message.model.js ';
 
 export default class MessageDao {
 

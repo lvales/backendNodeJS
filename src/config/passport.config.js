@@ -5,7 +5,7 @@ import GitHubStrategy from 'passport-github2'
 import { config } from "./config.js"
 import CartDao from "../dao/mongoDb/CartDao.js";
 import { createHash, validatePassword } from "../utils.js";
-import UserModel from "../dao/mongoDb/models/user.model.js";
+import UserModel from "../dao/models/user.model.js";
 
 const cartDao = new CartDao;
 

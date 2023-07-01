@@ -1,5 +1,4 @@
 import { Router } from "express";
-import CartDao from "../dao/mongoDb/CartDao.js";
 import CartsController from "../controllers/carts.controller.js";
 import { ValidateId } from "../middlewares/validate.middleware.js";
 

@@ -78,13 +78,6 @@ class ProductsController {
       });
     }
   
-    if (updateProduct.duplicate === true) {
-      return res.status(404).send({
-        status: 'ERROR',
-        msg: `El codigo ${reqProduct.code} ya existe en otro producto de la base de datos`
-      });
-    }
-  
     return res.send({
       status: 'success',
       msg: `El producto con id ${pid} fue modificado`

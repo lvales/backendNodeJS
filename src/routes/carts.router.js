@@ -30,5 +30,8 @@ router.delete('/:cid/product/:pid', cartController.deleteProductCart);
 // Eliminar todos los productos de un carrito
 router.delete('/:cid',ValidateId, cartController.deleteAllProductCart);
 
+// Finalizar la compra
+router.get('/:cid/purchase',ValidateId, cartController.purchaseCart);
+
 
 export default router;

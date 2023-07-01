@@ -108,7 +108,7 @@ export default class CartDao {
       }
    }
 
-   // Actualizar un producto del carrito por id
+   // Cargar array de productos al carrito por id
    updateProduct = async (cid, products) => {
       // Valida que exista el carrito y el producto
       const cartProduct = await this.getCartProductById(cid);

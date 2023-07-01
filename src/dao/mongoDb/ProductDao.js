@@ -37,7 +37,6 @@ export default class ProductDao {
    }
 
    addProduct = async (product) => {
-
       const { title, description, code, price, stock, category, thumbnail, status } = product;
 
       // Valida que no exista un producto con el mismo codigo
@@ -61,12 +60,12 @@ export default class ProductDao {
       } catch (error) {
          console.log(error);
       }
-   }
+   } 
 
    updateProduct = async (pid, product) => {
-      // Valida que no exista un producto con el mismo codigo
-      let isDuplicateCode = await ProductModule.find({ code: product.code });
-      if (isDuplicateCode.length > 0) return { duplicate: true }
+      // Valida que exista un producto
+      const existProduct = await ProductModule.findOne({ _id: pid });
+      if (!existProduct) return { exists: false };
       // Actualiza el producto
       const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
 

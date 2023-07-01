@@ -10,6 +10,13 @@ export const privateAccess = (req, res, next) => {
 };
 // Verifica si el usuario tiene acceso de administrador
 export const adminAccess = (req, res, next) => {
+   if (!req.session.user) return res.redirect('/');
    if (req.session.user.rol !== 'admin') return res.redirect('/products');
+   next();
+};
+//Solo user
+export const userAccess = (req, res, next) => {
+   if (!req.session.user) return res.redirect('/');
+   if (req.session.user.rol !== 'user') return res.redirect('/products');
    next();
 };

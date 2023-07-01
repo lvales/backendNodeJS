@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import ViewController from "../controllers/view.controller.js";
-import { publicAccess, privateAccess, adminAccess } from "../middlewares/access.middleware.js";
+import { publicAccess, privateAccess, adminAccess, userAccess } from "../middlewares/access.middleware.js";
 
 const router = Router();
 const viewController = new ViewController()
@@ -30,6 +30,6 @@ router.get('/products', privateAccess, viewController.getViewProducts);
 router.get('/carts/:cid', viewController.getViewCart);
 
 // Ruta de chat
-router.get('/chat', privateAccess, viewController.getChat);
+router.get('/chat', privateAccess, userAccess, viewController.getChat);
 
 export default router;

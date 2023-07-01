@@ -16,6 +16,7 @@ const pathEnviroment = enviroment.Mode === "prod" ? path.join(__dirname, "../.en
 dotenv.config({ path: pathEnviroment });
 
 const PORT           = process.env.PORT;
+const MONGO_DB       = process.env.MONGO_DB;
 const MONGO_URL      = process.env.MONGO_URL;
 const SECRET_WORD    = process.env.SECRET_WORD;
 const CLIENT_ID      = process.env.CLIENT_ID;
@@ -26,6 +27,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 export const config = {
    PORT           : PORT,
+   MONGO_DB       : MONGO_DB,
    MONGO_URL      : MONGO_URL,
    SECRET_WORD    : SECRET_WORD,
    CLIENT_ID      : CLIENT_ID,

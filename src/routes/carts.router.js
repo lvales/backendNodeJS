@@ -4,8 +4,6 @@ import CartsController from "../controllers/carts.controller.js";
 import { ValidateId } from "../middlewares/validate.middleware.js";
 
 const router = Router();
-const dao = new CartDao();
-
 const cartController = new CartsController;
 
 // Rutas

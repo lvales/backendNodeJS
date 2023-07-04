@@ -17,6 +17,7 @@ class SessionController {
       if (!req.user) return res.status(401).send({ status: "ERROR", msg: "Credenciales invalidas" });
 
       req.session.user = {
+         uid: req.user._id,
          first_name: req.user.first_name,
          last_name: req.user.last_name,
          email: req.user.email,

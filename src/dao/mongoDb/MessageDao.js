@@ -1,4 +1,4 @@
-import MessageModule from '../models/message.model.js ';
+import MessageModel from '../models/message.model.js ';
 
 export default class MessageDao {
 
@@ -6,7 +6,7 @@ export default class MessageDao {
    // Obtener todos los mensajes
    getMessages = async () => {
       try {
-         const result = await MessageModule.find().lean();
+         const result = await MessageModel.find().lean();
          return result
       } catch (error) {
          console.log(error);
@@ -24,7 +24,7 @@ export default class MessageDao {
          message
       }
       try {
-         const result = await MessageModule.create(newMessage);
+         const result = await MessageModel.create(newMessage);
       } catch (error) {
          console.log(error);
       }

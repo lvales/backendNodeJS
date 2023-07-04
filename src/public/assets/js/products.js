@@ -3,6 +3,7 @@ window.onload = function () {
 
    const addToCart = document.getElementsByName('addToCart');
    const viewCart = document.getElementById('viewCart');
+   const uid = document.getElementById('uid');
 
    let cartId = sessionStorage.getItem('cartId');
    let productId = '';
@@ -24,17 +25,30 @@ window.onload = function () {
       window.location.href = url;
    });
 
-   // Crea el cartId y lo guarda en sessionStorage para usarlo en el carrito
+   // TODO Obtener el cartId con el UserId y agrega el producto al carrito
    async function getCartId() {
-      await fetch('/api/carts', {
-         method: 'POST',
+      console.log(uid.value);
+      const url = `/api/users/${uid.value}`;
+      await fetch(url, {
+         method: 'GET',
       }).then(res => res.json())
-         .then(data => {
-            cartId = data.cart._id;
-            sessionStorage.setItem('cartId', cartId);
+         .then(data => {  
+            cartId = data.user.cartId;
             addProductToCart(cartId);
          })
-   }
+      }	
+
+
+   // async function getCartId() {
+   //    await fetch('/api/carts', {
+   //       method: 'POST',
+   //    }).then(res => res.json())
+   //       .then(data => {
+   //          cartId = data.cart._id;
+   //          sessionStorage.setItem('cartId', cartId);
+   //          addProductToCart(cartId);
+   //       })
+   // }
 
    // Agrega el producto al carrito con el cartId y productId   
    async function addProductToCart(cartId) {

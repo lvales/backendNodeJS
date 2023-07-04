@@ -1,4 +1,4 @@
-import ProductModule from '../models/product.model.js';
+import ProductModel from '../models/product.model.js';
 
 export default class ProductDao {
 
@@ -9,7 +9,7 @@ export default class ProductDao {
       query ? param.category = query : null;
 
       try {
-         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModule.paginate(param, { limit, page, sort: { price: sort }, lean: true });
+         const { docs, totalPage, prevPage, nextPage, hasPrevPage, hasNextPage } = await ProductModel.paginate(param, { limit, page, sort: { price: sort }, lean: true });
          const products = docs;
          if (products.length === 0) return { exists: false };
          return {
@@ -28,7 +28,7 @@ export default class ProductDao {
 
    getProductById = async (pid) => {
       try {
-         const product = await ProductModule.findOne({ _id: pid });
+         const product = await ProductModel.findOne({ _id: pid });
          if (!product) return { exists: false };
          return product;
       } catch (error) {
@@ -40,7 +40,7 @@ export default class ProductDao {
       const { title, description, code, price, stock, category, thumbnail, status } = product;
 
       // Valida que no exista un producto con el mismo codigo
-      let isDuplicate = await ProductModule.find({ code: code });
+      let isDuplicate = await ProductModel.find({ code: code });
       if (isDuplicate.length > 0) return { duplicate: true }
 
       const newProduct = {
@@ -55,7 +55,7 @@ export default class ProductDao {
       }
 
       try {
-         const result = await ProductModule.create(newProduct);
+         const result = await ProductModel.create(newProduct);
          return result;
       } catch (error) {
          console.log(error);
@@ -64,13 +64,13 @@ export default class ProductDao {
 
    updateProduct = async (pid, product) => {
       // Valida que exista un producto
-      const existProduct = await ProductModule.findOne({ _id: pid });
+      const existProduct = await ProductModel.findOne({ _id: pid });
       if (!existProduct) return { exists: false };
       // Actualiza el producto
       const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
 
       try {
-         const result = await ProductModule.updateOne({ _id: pid }, { $set: updateProduct });
+         const result = await ProductModel.updateOne({ _id: pid }, { $set: updateProduct });
          return result;
       } catch (error) {
          console.log(error);
@@ -79,7 +79,7 @@ export default class ProductDao {
 
    deleteProduct = async (pid) => {
       try {
-         const result = await ProductModule.deleteOne({ _id: pid });
+         const result = await ProductModel.deleteOne({ _id: pid });
          return result;
       } catch (error) {
          console.log(error);

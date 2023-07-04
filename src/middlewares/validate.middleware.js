@@ -26,7 +26,6 @@ export const ValidateProductPaginate = (req, res, next) => {
 export const ValidateId = (req, res, next) => {
    const pid = req.params.pid;
    const cid = req.params.cid;
-   console.log("p: "+pid, "c: " + cid);
    if (pid && pid.trim().length != 24) {
       console.log("solo pid");
       res.status(400).json({

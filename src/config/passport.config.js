@@ -62,7 +62,7 @@ const initializePassport = () => {
             const uid = user._id;
             const cart = await cartDao.createCart();
             user.cartId = cart._id;
-            const result = await UserModel.updateOne({ _id: uid }, { $set: user });
+            await UserModel.updateOne({ _id: uid }, { $set: user });
          }
 
          return done(null, user);

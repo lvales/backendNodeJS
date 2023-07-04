@@ -1,8 +1,13 @@
+import { v4 as uuidv4 } from 'uuid';
+import UserDao from "../dao/mongoDb/UserDao.js";
 import CartDao from "../dao/mongoDb/CartDao.js";
+import TicketDao from "../dao/mongoDb/TicketDao.js";
 import ProductDao from "../dao/mongoDb/ProductDao.js";
 
 const cartDao = new CartDao;
 const productDao = new ProductDao;
+const ticketDao = new TicketDao;
+const userDao = new UserDao;
 
 class CartsController {
    // Obtener todos los carritos
@@ -37,7 +42,7 @@ class CartsController {
    // Crear carrito
    createCart = async (req, res) => {
       const cart = await cartDao.createCart();
-  
+
       if (cart.status === false) {
          return res.status(500).send({
             status: 'ERROR',
@@ -161,6 +166,8 @@ class CartsController {
       const cart = await cartDao.getCartProductById(idCart);
       const products = cart.products;
       const productsOutOfStock = [];
+      let amount = 0;
+
       // Valida que exista el carrito
       if (cart.exists === false) {
          return res.status(404).send({
@@ -168,12 +175,32 @@ class CartsController {
             msg: `El carrito con id ${idCart} no existe`
          });
       }
-      // Valida que los productos tengan stock
-      products.map(async obj => {
-         if (obj.quantity > obj.product.stock) {
+
+      // Obtener mail del usuario y guardarlo en purchaser
+      const user = await userDao.getUserByIdCart(idCart);
+      const purchaser = user.email;
+      
+      // Valida que los productos tengan stock y los resta del stock
+      for (const obj of products) {
+         if (obj.quantity <= obj.product.stock) {
+            const product = await productDao.getProductById(obj.product._id.toString());
+            product.stock -= obj.quantity;
+            amount += obj.quantity * obj.product.price;
+            await productDao.updateProduct(obj.product._id.toString(), product);
+            await cartDao.deleteProductById(idCart, obj.product._id.toString());
+         } else {
             productsOutOfStock.push(obj.product._id.toString());
          }
-      })
+      }
+
+      // Genera un ticket con los productos comprados
+      const ticket = {
+         code: uuidv4(),
+         amount,
+         purchaser,
+      }
+      await ticketDao.createTicket(ticket);
+
       // Si hay productos sin stock, devuelve un mensaje con los productos
       if (productsOutOfStock.length > 0) {
          return res.send({
@@ -181,19 +208,12 @@ class CartsController {
             products: productsOutOfStock
          });
       }
-      // Actualiza el stock de los productos
-      products.map(async obj => {
-         const product = await productDao.getProductById(obj.product._id.toString());
-         product.stock -= obj.quantity;
-         await productDao.updateProduct(obj.product._id.toString(), product);
-      })
 
       return res.send({
          status: 'success',
          msg: `Compra realizada con exito`
       });
    }
-
 }
 
 export default CartsController;

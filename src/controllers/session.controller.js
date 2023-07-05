@@ -1,5 +1,6 @@
 import userModel from '../dao/models/user.model.js';
 import { createHash } from '../utils.js';
+import { CreateUserDto } from '../dao/dto/user.dto.js'
 
 class SessionController {
    // Registro de Usuario
@@ -44,9 +45,10 @@ class SessionController {
    }
 
    // current
-   current = (req, res) => {
+   current = async (req, res) => {
       if (!req.session.user) return res.status(401).send({ status: "ERROR", msg: "No hay usuario logueado" });
-      res.send({ status: "success", payload: req.session.user, message: "Usuario logueado" })
+      const createUserDto = new CreateUserDto(req.session.user);
+      res.send({ status: "success", payload: createUserDto, message: "Usuario logueado" })
    }
    
    // Reset Password

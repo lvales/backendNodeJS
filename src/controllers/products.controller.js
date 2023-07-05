@@ -1,4 +1,4 @@
-import ProductDao from "../dao/mongoDb/ProductDao.js";
+import ProductDao from "../dao/manager/mongoDb/ProductDao.js";
 
 const dao = new ProductDao();
 

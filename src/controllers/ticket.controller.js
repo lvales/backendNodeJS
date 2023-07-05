@@ -1,4 +1,4 @@
-import TicketDao from '../dao/mongoDb/TicketDao.js';
+import TicketDao from '../dao/manager/mongoDb/TicketDao.js';
 
 const ticketDao = new TicketDao;
 

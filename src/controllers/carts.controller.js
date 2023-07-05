@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import UserDao from "../dao/mongoDb/UserDao.js";
-import CartDao from "../dao/mongoDb/CartDao.js";
-import TicketDao from "../dao/mongoDb/TicketDao.js";
-import ProductDao from "../dao/mongoDb/ProductDao.js";
+import UserDao from "../dao/manager/mongoDb/UserDao.js";
+import CartDao from "../dao/manager/mongoDb/CartDao.js";
+import TicketDao from "../dao/manager/mongoDb/TicketDao.js";
+import ProductDao from "../dao/manager/mongoDb/ProductDao.js";
 
 const cartDao = new CartDao;
 const productDao = new ProductDao;

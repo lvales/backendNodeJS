@@ -30,7 +30,7 @@ const server = app.listen(PORT, () =>
 );
 
 // MongoDB
-const MONGO = 'mongodb+srv://lvales:lvales@ecommerce.5m5kksr.mongodb.net/?retryWrites=true&w=majority';
+const MONGO = 'mongodb+srv://lvales:EV8WyMTGG9Q5rjva@cluster0.tdfunkx.mongodb.net/ecommerce';
 const conection = mongoose.connect(MONGO);
 
 // Socket.io

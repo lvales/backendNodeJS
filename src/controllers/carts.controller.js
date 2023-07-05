@@ -168,7 +168,7 @@ class CartsController {
       const productsOutOfStock = [];
       let amount = 0;
 
-      // Valida que exista el carrito
+      // Valida que exista el carrito y productos
       if (cart.exists === false) {
          return res.status(404).send({
             status: 'ERROR',
@@ -176,9 +176,12 @@ class CartsController {
          });
       }
 
-      // Obtener mail del usuario y guardarlo en purchaser
-      const user = await userDao.getUserByIdCart(idCart);
-      const purchaser = user.email;
+      if (products.length === 0) {
+         return res.status(404).send({
+            status: 'ERROR',
+            msg: `El carrito con id ${idCart} no tiene productos`
+         });
+      }
       
       // Valida que los productos tengan stock y los resta del stock
       for (const obj of products) {
@@ -197,9 +200,9 @@ class CartsController {
       const ticket = {
          code: uuidv4(),
          amount,
-         purchaser,
+         purchaser: req.user.email,
       }
-      await ticketDao.createTicket(ticket);
+      const ticketCreated = await ticketDao.createTicket(ticket);
 
       // Si hay productos sin stock, devuelve un mensaje con los productos
       if (productsOutOfStock.length > 0) {
@@ -211,7 +214,8 @@ class CartsController {
 
       return res.send({
          status: 'success',
-         msg: `Compra realizada con exito`
+         msg: `Compra realizada con exito`,
+         ticket: ticketCreated,
       });
    }
 }

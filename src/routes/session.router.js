@@ -22,6 +22,9 @@ router.get('/logout', sessionController.logout);
 // Reset Password
 router.post('/resetPassword', sessionController.resetPassword);
 
+// current
+router.get('/current', sessionController.current);
+
 // Login con GitHub
 router.get('/github', passport.authenticate('github', {scope:['user:email']}), sessionController.loginGit)
 

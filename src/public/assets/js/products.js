@@ -25,9 +25,8 @@ window.onload = function () {
       window.location.href = url;
    });
 
-   // TODO Obtener el cartId con el UserId y agrega el producto al carrito
+   // Obtiene el cartId con el UserId y agrega el producto al carrito
    async function getCartId() {
-      console.log(uid.value);
       const url = `/api/users/${uid.value}`;
       await fetch(url, {
          method: 'GET',

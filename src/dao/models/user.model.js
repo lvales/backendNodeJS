@@ -18,6 +18,6 @@ const schema = new mongoose.Schema({
       default: Date.now()
    }
 });
-const userModel = mongoose.model(collection, schema);
+const UserModel = mongoose.model(collection, schema);
 
-export default userModel;
+export default UserModel;

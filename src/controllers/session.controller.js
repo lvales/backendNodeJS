@@ -14,8 +14,9 @@ class SessionController {
    // Login
    login = async (req, res) => {
 
+      
       if (!req.user) return res.status(401).send({ status: "ERROR", msg: "Credenciales invalidas" });
-
+      
       req.session.user = {
          uid: req.user._id,
          first_name: req.user.first_name,
@@ -25,7 +26,8 @@ class SessionController {
          cartId: req.user.cartId,
          rol: req.user.rol
       }
-
+      // console.log(req.session.user);
+      
       res.send({ status: "success", payload: req.user, message: "Usuario logueado" })
    }
 
@@ -40,6 +42,13 @@ class SessionController {
          res.redirect('/');
       });
    }
+
+   // current
+   current = (req, res) => {
+      if (!req.session.user) return res.status(401).send({ status: "ERROR", msg: "No hay usuario logueado" });
+      res.send({ status: "success", payload: req.session.user, message: "Usuario logueado" })
+   }
+   
    // Reset Password
    resetPassword = async (req, res) => {
       const { email, password } = req.body;

@@ -1,5 +1,5 @@
-import CartDao from "../dao/mongoDb/CartDao.js";
-import ProductDao from "../dao/mongoDb/ProductDao.js";
+import CartDao from "../dao/manager/mongoDb/CartDao.js";
+import ProductDao from "../dao/manager/mongoDb/ProductDao.js";
 
 
 const productDao = new ProductDao();

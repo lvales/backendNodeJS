@@ -9,8 +9,8 @@ import __dirname from "./utils.js";
 import { config } from "./config/config.js"
 import viewRouter from "./routes/view.routes.js"
 import cartsRouter from "./routes/carts.router.js"
-import ProductDao from "./dao/mongoDb/ProductDao.js";
-import MessageDao from "./dao/mongoDb/MessageDao.js";
+import ProductDao from "./dao/manager/mongoDb/ProductDao.js";
+import MessageDao from "./dao/manager/mongoDb/MessageDao.js";
 import sessionRouter from "./routes/session.router.js"
 import { ConnectionDB } from "./config/connectionDB.js";
 import productsRouter from "./routes/products.router.js";

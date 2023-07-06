@@ -3,7 +3,7 @@ import local from "passport-local";
 import GitHubStrategy from 'passport-github2'
 
 import { config } from "./config.js"
-import CartDao from "../dao/mongoDb/CartDao.js";
+import CartDao from "../dao/manager/mongoDb/CartDao.js";
 import { createHash, validatePassword } from "../utils.js";
 import UserModel from "../dao/models/user.model.js";
 

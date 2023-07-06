@@ -92,11 +92,11 @@ const initializePassport = () => {
          const user = await UserModel.findOne({ email: profile._json.email });
 
          if (!user) {
-            // const email = profile._json.email == null ? profile._json.username : null;
+            const email = profile._json.email == null && profile._json.name + '@mail.com';
             const newUser = {
                first_name: profile._json.name,
                last_name: '',
-               email: profile._json.email,
+               email: email,
                age: 18,
                password: '',
             }

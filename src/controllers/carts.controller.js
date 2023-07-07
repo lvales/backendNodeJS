@@ -5,8 +5,10 @@ import { productServices } from '../repository/index.js';
 
 
 class CartsController {
+   
    // Obtener todos los carritos
    getAllCarts = async (req, res) => {
+
       const carts = await cartServices.getAllCarts();
 
       if (carts.exists === false) {
@@ -21,6 +23,7 @@ class CartsController {
    }
    // Obtener carrito por id
    getCartById = async (req, res) => {
+  
       const idCart = req.params.cid;
       const cart = await cartServices.getCartById(idCart);
 
@@ -191,7 +194,6 @@ class CartsController {
          }
       }
 
-      console.log(req.session);
       // Genera un ticket con los productos comprados
       const ticket = {
          code: uuidv4(),

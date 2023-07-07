@@ -4,16 +4,16 @@ import { CreateUserDto } from '../dao/dto/user.dto.js'
 
 class SessionController {
    // Registro de Usuario
-   register = async (req, res) => {
+   register = (req, res) => {
       res.send({ status: "success", msg: "Usuario registrado" });
    }
 
-   failRegister = async (req, res) => {
+   failRegister = (req, res) => {
       console.log('Fallo en el registro');
       res.send({ status: "ERROR", msg: "Error en el registro" });
    }
    // Login
-   login = async (req, res) => {
+   login = (req, res) => {
 
       if (!req.user) return res.status(401).send({ status: "ERROR", msg: "Credenciales invalidas" });
       
@@ -26,12 +26,11 @@ class SessionController {
          cartId: req.user.cartId,
          rol: req.user.rol
       }
-      // console.log(req.session.user);
       
       res.send({ status: "success", payload: req.user, message: "Usuario logueado" })
    }
 
-   failLogin = async (req, res) => {
+   failLogin = (req, res) => {
       console.log('Fallo en el ingreso');
       res.send({ status: "ERROR", msg: "Error en el ingreso" });
    }
@@ -44,7 +43,7 @@ class SessionController {
    }
 
    // current
-   current = async (req, res) => {
+   current = (req, res) => {
       if (!req.session.user) return res.status(401).send({ status: "ERROR", msg: "No hay usuario logueado" });
       const createUserDto = new CreateUserDto(req.session.user);
       res.send({ status: "success", payload: createUserDto, message: "Usuario logueado" })

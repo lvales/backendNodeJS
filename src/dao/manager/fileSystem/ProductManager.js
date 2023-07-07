@@ -66,7 +66,7 @@ export default class ProductManager {
     }
   };
 
-  updateProducts = async (id_product, updateProduct) => {
+  updateCarts = async (id_product, updateCart) => {
     const products = await this.getProducts();
     const id = parseInt(id_product);
     const index = products.findIndex(e => e.id === id);
@@ -77,13 +77,13 @@ export default class ProductManager {
       }
     }
 
-    updateProduct.id = id;
+    updateCart.id = id;
 
-    products[index] = { ...products[index], ...updateProduct };
+    products[index] = { ...products[index], ...updateCart };
 
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8');
-      return updateProduct;
+      return updateCart;
 
     } catch (error) {
       console.log(error);

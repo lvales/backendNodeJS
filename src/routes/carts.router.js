@@ -22,13 +22,13 @@ router.post('/:cid/product/:pid', cartController.addToCart);
 router.put('/:cid', ValidateId, cartController.updateCart);
 
 // Actualizar cantidad de un producto del carrito 
-router.put('/:cid/product/:pid', cartController.quantityProductCart);
+router.put('/:cid/product/:pid', cartController.quantityProduct);
 
 // Eliminar productos del carrito
-router.delete('/:cid/product/:pid', cartController.deleteProductCart);
+router.delete('/:cid/product/:pid', cartController.deleteProductFromCart);
 
 // Eliminar todos los productos de un carrito
-router.delete('/:cid',ValidateId, cartController.deleteAllProductCart);
+router.delete('/:cid',ValidateId, cartController.deleteAllProductsFromCartCart);
 
 // Finalizar la compra
 router.get('/:cid/purchase',ValidateId, cartController.purchaseCart);

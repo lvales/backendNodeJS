@@ -50,7 +50,7 @@ class ViewController {
    }
    // Ruta para ver carrito
    getViewCart = async (req, res) => {
-      const cart = await cartDao.getCartProductById(req.params.cid);
+      const cart = await cartDao.getCartById(req.params.cid);
       const products = cart.products;
       if (cart.exists === false) {
          return res.status(404).send({

@@ -1,12 +1,10 @@
-import TicketDao from '../dao/mongoDb/TicketDao.js';
-
-const ticketDao = new TicketDao;
+import { ticketServices } from "../repository/ticket.repository.js";
 
 class TicketController {
 
    createTicket = async (req, res) => {
       const ticket = req.body;
-      const result = await ticketDao.createTicket(ticket);
+      const result = await ticketServices.createTicket(ticket);
 
       if (result.status === false) {
          return res.status(500).send({

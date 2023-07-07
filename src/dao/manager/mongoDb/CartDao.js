@@ -7,7 +7,7 @@ const productDao = new ProductDao();
 export default class CartDao {
    // Métodos
    // Obtener todos los carritos
-   getCartProducts = async () => {
+   getAllCarts = async () => {
       try {
          const result = await CartModel.find().populate('products.product').lean();
          if (result.length === 0) return { exists: false };
@@ -19,7 +19,7 @@ export default class CartDao {
    }
 
    // Obtener un carrito por id
-   getCartProductById = async (cid) => {
+   getCartById = async (cid) => {
       try {
          const result = await CartModel.findOne({ _id: cid }).populate('products.product').lean();
          if (result === null) return { exists: false };
@@ -45,9 +45,9 @@ export default class CartDao {
    };
 
    // Agregar un producto al carrito
-   addProductCart = async (cid, pid) => {
+   addToCart = async (cid, pid) => {
       // Valida que exista el carrito y el producto
-      const cartProduct = await this.getCartProductById(cid);
+      const cartProduct = await this.getCartById(cid);
       const existProduct = await productDao.getProductById(pid);
       if (!cartProduct) return { existCart: false }
       if (!existProduct) return { existProduct: false }
@@ -77,9 +77,9 @@ export default class CartDao {
    }
 
    // Eliminar todos los productos del carrito
-   deleteAllProduct = async (cid) => {
+   deleteAllProductsFromCart = async (cid) => {
       // Valida que exista el carrito
-      const cartProduct = await this.getCartProductById(cid);
+      const cartProduct = await this.getCartById(cid);
       if (!cartProduct) return { existCart: false }
       const result = cartProduct.products.length
 
@@ -93,9 +93,9 @@ export default class CartDao {
    }
 
    // Eliminar un producto del carrito por id
-   deleteProductById = async (cid, pid) => {
+   deleteProductFromCart = async (cid, pid) => {
       // Valida que exista el carrito y el producto
-      const cartProduct = await this.getCartProductById(cid);
+      const cartProduct = await this.getCartById(cid);
       if (!cartProduct) return { existCart: false }
       const result = cartProduct.products.find(e => e.product._id.toString() === pid);
 
@@ -109,9 +109,9 @@ export default class CartDao {
    }
 
    // Cargar array de productos al carrito por id
-   updateProduct = async (cid, products) => {
+   updateCart = async (cid, products) => {
       // Valida que exista el carrito y el producto
-      const cartProduct = await this.getCartProductById(cid);
+      const cartProduct = await this.getCartById(cid);
       if (!cartProduct) return { existCart: false }
 
       // Insertar array de productos
@@ -130,9 +130,9 @@ export default class CartDao {
    }
 
    // Actualizar la cantidad de un producto del carrito por id
-   updateProductQuantity = async (cid, pid, quantity) => {
+   quantityProduct = async (cid, pid, quantity) => {
       // Valida que exista el carrito y el producto
-      const cartProduct = await this.getCartProductById(cid);
+      const cartProduct = await this.getCartById(cid);
       if (!cartProduct) return { existCart: false }
       const result = cartProduct.products.find(e => e.product._id.toString() === pid);
 

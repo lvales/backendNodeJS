@@ -62,15 +62,15 @@ export default class ProductDao {
       }
    } 
 
-   updateProduct = async (pid, product) => {
+   updateCart = async (pid, product) => {
       // Valida que exista un producto
       const existProduct = await ProductModel.findOne({ _id: pid });
       if (!existProduct) return { exists: false };
       // Actualiza el producto
-      const updateProduct = { ...product, updatedAt: new Date().toLocaleString() };
+      const updateCart = { ...product, updatedAt: new Date().toLocaleString() };
 
       try {
-         const result = await ProductModel.updateOne({ _id: pid }, { $set: updateProduct });
+         const result = await ProductModel.updateOne({ _id: pid }, { $set: updateCart });
          return result;
       } catch (error) {
          console.log(error);

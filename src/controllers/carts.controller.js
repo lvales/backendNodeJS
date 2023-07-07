@@ -1,16 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
-import CartDao from "../dao/manager/mongoDb/CartDao.js";
-import TicketDao from "../dao/manager/mongoDb/TicketDao.js";
-import ProductDao from "../dao/manager/mongoDb/ProductDao.js";
+import { cartServices } from '../repository/index.js';
+import { ticketServices } from '../repository/index.js';
+import { productServices } from '../repository/index.js';   
 
-const cartDao = new CartDao;
-const productDao = new ProductDao;
-const ticketDao = new TicketDao;
 
 class CartsController {
    // Obtener todos los carritos
    getAllCarts = async (req, res) => {
-      const carts = await cartDao.getCartProducts();
+      const carts = await cartServices.getAllCarts();
 
       if (carts.exists === false) {
          return res.status(404).send({
@@ -25,7 +22,7 @@ class CartsController {
    // Obtener carrito por id
    getCartById = async (req, res) => {
       const idCart = req.params.cid;
-      const cart = await cartDao.getCartProductById(idCart);
+      const cart = await cartServices.getCartById(idCart);
 
       if (cart.exists === false) {
          return res.status(404).send({
@@ -39,7 +36,7 @@ class CartsController {
    }
    // Crear carrito
    createCart = async (req, res) => {
-      const cart = await cartDao.createCart();
+      const cart = await cartServices.createCart();
 
       if (cart.status === false) {
          return res.status(500).send({
@@ -57,7 +54,7 @@ class CartsController {
    addToCart = async (req, res) => {
       const idCart = req.params.cid;
       const idProduct = req.params.pid;
-      const addedProdut = await cartDao.addProductCart(idCart, idProduct);
+      const addedProdut = await cartServices.addToCart(idCart, idProduct);
       // Valida que exista el carrito
       if (addedProdut.existCart === false) {
          return res.status(404).send({
@@ -83,7 +80,7 @@ class CartsController {
       const idCart = req.params.cid;
       const products = req.body
 
-      const result = await cartDao.updateProduct(idCart, products);
+      const result = await cartServices.updateCart(idCart, products);
       // Valida que exista el carrito
       if (result.existCart === false) {
          return res.status(400).send({
@@ -98,23 +95,23 @@ class CartsController {
       });
    }
    // Actualizar cantidad de un producto del carrito 
-   quantityProductCart = async (req, res) => {
+   quantityProduct = async (req, res) => {
       const idCart = req.params.cid;
       const idProduct = req.params.pid;
       const quantity = req.body.quantity;
 
-      await cartDao.updateProductQuantity(idCart, idProduct, quantity);
+      await cartServices.quantityProduct(idCart, idProduct, quantity);
       return res.send({
          status: 'success',
          msg: `El producto con id ${idProduct} se actualizo la cantidad en el carrito con id ${idCart}`
       });
    }
    // Eliminar productos del carrito
-   deleteProductCart = async (req, res) => {
+   deleteProductFromCart = async (req, res) => {
       const idCart = req.params.cid;
       const idProduct = req.params.pid;
 
-      const result = await cartDao.deleteProductById(idCart, idProduct)
+      const result = await cartServices.deleteProductFromCart(idCart, idProduct)
       // Valida que exista el carrito
       if (result.existCart === false) {
          return res.status(400).send({
@@ -135,10 +132,10 @@ class CartsController {
       });
    }
    // Eliminar todos los productos de un carrito
-   deleteAllProductCart = async (req, res) => {
+   deleteAllProductsFromCartCart = async (req, res) => {
       const idCart = req.params.cid;
 
-      const result = await cartDao.deleteAllProduct(idCart)
+      const result = await cartServices.deleteAllProductsFromCart(idCart)
       // Valida que exista el carrito
       if (result.existCart === false) {
          return res.status(400).send({
@@ -161,7 +158,7 @@ class CartsController {
 
    purchaseCart = async (req, res) => {
       const idCart = req.params.cid;
-      const cart = await cartDao.getCartProductById(idCart);
+      const cart = await cartServices.getCartById(idCart);
       const products = cart.products;
       const productsOutOfStock = [];
       let amount = 0;
@@ -184,23 +181,24 @@ class CartsController {
       // Valida que los productos tengan stock y los resta del stock
       for (const obj of products) {
          if (obj.quantity <= obj.product.stock) {
-            const product = await productDao.getProductById(obj.product._id.toString());
+            const product = await productServices.getProductById(obj.product._id.toString());
             product.stock -= obj.quantity;
             amount += obj.quantity * obj.product.price;
-            await productDao.updateProduct(obj.product._id.toString(), product);
-            await cartDao.deleteProductById(idCart, obj.product._id.toString());
+            await productServices.updateCart(obj.product._id.toString(), product);
+            await cartServices.deleteProductFromCart(idCart, obj.product._id.toString());
          } else {
             productsOutOfStock.push(obj.product._id.toString());
          }
       }
 
+      console.log(req.session);
       // Genera un ticket con los productos comprados
       const ticket = {
          code: uuidv4(),
          amount,
          purchaser: req.user.email,
       }
-      const ticketCreated = await ticketDao.createTicket(ticket);
+      const ticketCreated = await ticketServices.createTicket(ticket);
 
       // Si hay productos sin stock, devuelve un mensaje con los productos
       if (productsOutOfStock.length > 0) {

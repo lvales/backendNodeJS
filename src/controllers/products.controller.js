@@ -1,6 +1,4 @@
-import ProductDao from "../dao/manager/mongoDb/ProductDao.js";
-
-const dao = new ProductDao();
+import { productServices } from "../repository/index.js";
 
 class ProductsController {
 
@@ -10,7 +8,7 @@ class ProductsController {
     const query = req.query.query || '';
     const sort = req.query.sort || 'desc';
 
-    const result = await dao.getProducts(limit, page, query, sort);
+    const result = await productServices.getAllProducts(limit, page, query, sort);
 
     if (result.exists === false) {
       return res.status(404).send({
@@ -26,7 +24,7 @@ class ProductsController {
 
   getProductsById = async (req, res) => {
     const pid = req.params.pid;
-    const product = await dao.getProductById(pid);
+    const product = await productServices.getProductById(pid);
 
     if (product.exists === false) {
       return res.status(404).send({
@@ -49,7 +47,7 @@ class ProductsController {
       reqProduct.thumbnail = [`http://localhost:8080/images/${filename}`];
     };
 
-    const product = await dao.addProduct(reqProduct);
+    const product = await productServices.addProduct(reqProduct);
 
     // Producto duplicado
     if (product.duplicate === true) {
@@ -65,13 +63,13 @@ class ProductsController {
     });
   }
 
-  updateProduct = async (req, res) => {
+  updateCart = async (req, res) => {
     const reqProduct = req.body;
     const pid = req.params.pid;
   
-    const updateProduct = await dao.updateProduct(pid, reqProduct);
+    const updateCart = await productServices.updateCart(pid, reqProduct);
   
-    if (updateProduct.exists === false) {
+    if (updateCart.exists === false) {
       return res.status(404).send({
         status: 'ERROR',
         msg: `El producto con id ${id} no existe`

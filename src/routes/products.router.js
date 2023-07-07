@@ -18,7 +18,7 @@ router.get("/:pid", ValidateId, productController.getProductsById);
 router.post("/", uploader.single("thumbnail"), ValidateProduct, productController.createProduct);
 
 // Ruta modificar producto
-router.put("/:pid", ValidateId, productController.updateProduct);
+router.put("/:pid", ValidateId, productController.updateCart);
 
 // Ruta eliminar producto
 router.delete("/:pid", ValidateId, productController.deleteProduct);

@@ -15,7 +15,6 @@ class SessionController {
    // Login
    login = async (req, res) => {
 
-      
       if (!req.user) return res.status(401).send({ status: "ERROR", msg: "Credenciales invalidas" });
       
       req.session.user = {

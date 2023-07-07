@@ -4,7 +4,6 @@ window.onload = function () {
    const cid = document.getElementById('cid');
 
    purchase.addEventListener('click', (e) => {
-      console.log('object');
       e.preventDefault();
       const url = `/api/carts/${cid.value}/purchase`;
       fetch(url, {
@@ -12,6 +11,7 @@ window.onload = function () {
       }
       ).then(res => res.json())
          .then(data => {
+            console.log(data.ticket);
             if (data.status === 'success') {
                Toastify({
                   text: 'Compra realizada con éxito',

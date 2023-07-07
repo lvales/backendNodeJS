@@ -3,9 +3,8 @@ window.onload = function () {
 
    const addToCart = document.getElementsByName('addToCart');
    const viewCart = document.getElementById('viewCart');
-   const cid = document.getElementById('uid');
+   const cid = document.getElementById('cid');
 
-   let cartId = sessionStorage.getItem('cartId');
    let productId = '';
    let url = '';
    
@@ -14,32 +13,20 @@ window.onload = function () {
       element.addEventListener('click', (e) => {
          e.preventDefault();
          productId = document.getElementsByName('addToCart')[i].id;
-         cartId ? addProductToCart(cartId) : getCartId();
+         addProductToCart(cid.value);
       }, false);
    });
    
    // Agrega un evento al botón de ver carrito
    viewCart.addEventListener('click', (e) => {
       e.preventDefault();
-      const url = `/carts/${cartId}`;
+      const url = `/carts/${cid.value}`;
       window.location.href = url;
    });
 
-   // Obtiene el cartId con el UserId y agrega el producto al carrito
-   async function getCartId() {
-      const url = `/api/carts/${cid.value}`;
-      await fetch(url, {
-         method: 'GET',
-      }).then(res => res.json())
-         .then(data => {  
-            cartId = data.cart._id;
-            addProductToCart(cartId);
-         })
-      }	
-
    // Agrega el producto al carrito con el cartId y productId   
    async function addProductToCart(cartId) {
-      url = `/api/carts/${cartId}/product/${productId.toString()}`;
+      url = `/api/carts/${cid.value}/product/${productId.toString()}`;
       await fetch(url, {
          method: 'POST',
       }

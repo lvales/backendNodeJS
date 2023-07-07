@@ -58,7 +58,10 @@ class ViewController {
             msg: `El carrito con id ${req.params.cid} no existe`
          });
       }
-      res.render('cartId', { products });
+      res.render('cartId', { 
+         products,
+         user: req.session.user
+       });
    }
    // Ruta de chat
    getChat = (req, res) => {

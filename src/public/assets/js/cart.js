@@ -12,7 +12,23 @@ window.onload = function () {
       }
       ).then(res => res.json())
          .then(data => {
-            (data.status) === 'success' ? alert('Compra realizada con exito') : alert('Error al agregar producto al carrito');
+            if (data.status === 'success') {
+               Toastify({
+                  text: 'Compra realizada con éxito',
+                  className: 'success',
+                  style: {
+                     background: 'green',
+                  }
+               }).showToast()
+            } else {
+               Toastify({
+                  text: 'Error al realizar la compra',
+                  className: 'error',
+                  style: {
+                     background: 'red',
+                  }
+               }).showToast()
+            }
             const url = `/carts/${cid.value}`;
             window.location.href = url;
          })

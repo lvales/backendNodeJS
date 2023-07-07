@@ -32,7 +32,23 @@ window.onload = function () {
       }
       ).then(res => res.json())
          .then(data => {
-            (data.status) === 'success' ? alert('Producto agregado al carrito') : alert('Error al agregar producto al carrito');
+            if (data.status === 'success') {
+               Toastify({
+                  text: 'Producto agregado al carrito',
+                  className: 'success',
+                  style: {
+                     background: 'green',
+                  }
+               }).showToast()
+            } else {
+               Toastify({
+                  text: 'Error al agregar el producto al carrito',
+                  className: 'error',
+                  style: {
+                     background: 'red',
+                  }
+               }).showToast()
+            }
          })
    }
 }

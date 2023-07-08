@@ -29,7 +29,7 @@ router.put('/:cid/product/:pid',userAccessApi, cartController.quantityProduct);
 router.delete('/:cid/product/:pid', userAccessApi, cartController.deleteProductFromCart);
 
 // Eliminar todos los productos de un carrito
-router.delete('/:cid',userAccessApi, cartController.deleteAllProductsFromCartCart);
+router.delete('/:cid',userAccessApi, cartController.deleteAllProductsFromCart);
 
 // Finalizar la compra
 router.get('/:cid/purchase',userAccessApi, cartController.purchaseCart);

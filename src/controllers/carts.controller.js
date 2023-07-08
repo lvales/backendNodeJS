@@ -135,7 +135,7 @@ class CartsController {
       });
    }
    // Eliminar todos los productos de un carrito
-   deleteAllProductsFromCartCart = async (req, res) => {
+   deleteAllProductsFromCart = async (req, res) => {
       const idCart = req.params.cid;
 
       const result = await cartServices.deleteAllProductsFromCart(idCart)

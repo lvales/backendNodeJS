@@ -9,12 +9,13 @@ import __dirname from "./utils.js";
 import { config } from "./config/config.js"
 import viewRouter from "./routes/view.routes.js"
 import cartsRouter from "./routes/carts.router.js"
-import ProductDao from "./dao/manager/mongoDb/ProductDao.js";
-import MessageDao from "./dao/manager/mongoDb/MessageDao.js";
 import sessionRouter from "./routes/session.router.js"
 import { ConnectionDB } from "./config/connectionDB.js";
 import productsRouter from "./routes/products.router.js";
 import initializePassport from "./config/passport.config.js";
+import ProductDao from "./dao/manager/mongoDb/ProductDao.js";
+import MessageDao from "./dao/manager/mongoDb/MessageDao.js";
+import mockingproductsRouter from "./routes/mockingproducts.router.js";
 
 //  Array de mensajes del chat
 const messageChat = [];
@@ -66,6 +67,7 @@ app.use('/', viewRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/products", productsRouter);
 app.use('/api/session', sessionRouter);
+app.use('/api/mockingproducts', mockingproductsRouter);
 
 // Websocket
 io.on('connection', async socket => {
